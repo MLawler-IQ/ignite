@@ -7,7 +7,7 @@ description: Fetch a Claude Design handoff URL and unpack it into the IgniteIQ p
 
 ## What this skill does
 
-Given a Claude Design handoff URL (or just the handoff ID), fetches the public tarball, extracts it into a fresh `~/Desktop/igniteiq-theme-v2/exports/<dated>-handoff-<id>/`, repoints the `latest` symlink, and pre-generates `DIFF.md` (export-vs-staging string diff) using the same logic as the legacy `watch-exports.sh` zip-drop watcher. Output is a one-line summary plus the suggested next step (`/port-iiq-diff`).
+Given a Claude Design handoff URL (or just the handoff ID), fetches the public tarball, extracts it into a fresh `~/ignite/exports/<dated>-handoff-<id>/`, repoints the `latest` symlink, and pre-generates `DIFF.md` (export-vs-staging string diff) using the same logic as the legacy `watch-exports.sh` zip-drop watcher. Output is a one-line summary plus the suggested next step (`/port-iiq-diff`).
 
 This is the URL-based replacement for the "zip → cloud inbox → watcher" path. The downstream skills (`/diff-iiq-export`, `/port-iiq-diff`, `/verify-iiq-fidelity`, `/visual-iiq-diff`) consume the resulting `exports/latest/` unchanged.
 
@@ -30,7 +30,7 @@ If neither arg is provided, stop and ask the user for the URL.
 INPUT="$1"          # url or id
 SHORT_NAME="$2"     # optional override
 
-EXPORTS=~/Desktop/igniteiq-theme-v2/exports
+EXPORTS=~/ignite/exports
 mkdir -p "$EXPORTS"
 
 # 1. Extract handoff ID from URL or accept bare ID
@@ -192,7 +192,7 @@ Next: /port-iiq-diff
 ## Security note
 
 These handoff URLs come from a third party (Scott or whoever shared the design). The skill:
-- Only writes inside `~/Desktop/igniteiq-theme-v2/exports/`, which is gitignored.
+- Only writes inside `~/ignite/exports/`, which is gitignored.
 - Validates the response is a gzipped tarball **before** extracting (via `file`).
 - Uses `tar -xzf` (no `-p`, no `--same-owner`); macOS BSD tar refuses absolute paths and `..` traversal entries by default.
 - Does **not** execute, source, or eval any code from the export.

@@ -4,8 +4,8 @@ const { chromium } = require('playwright');
 const path = require('path');
 const os = require('os');
 
-const EXPORT_DIR = path.join(os.homedir(), 'Desktop/igniteiq-theme-v2/exports/latest');
-const COMPARE_DIR = path.join(os.homedir(), 'Desktop/igniteiq-theme-v2/exports/.compare');
+const EXPORT_DIR = path.join(os.homedir(), 'ignite/exports/latest');
+const COMPARE_DIR = path.join(os.homedir(), 'ignite/exports/.compare');
 const STAGING = 'https://igniteiqstg.wpenginepowered.com';
 
 const PAGES = [

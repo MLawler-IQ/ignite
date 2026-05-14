@@ -130,7 +130,7 @@ port runs end-to-end without touching anyone's local launchd watcher.
 - Built artifact: `cowork-plugin/igniteiq-port.plugin` (run `bash scripts/build-cowork-plugin.sh` to rebuild)
 - Bundled skills: fetch-iiq-design, diff-iiq-export, port-iiq-diff,
   verify-iiq-fidelity, visual-iiq-diff
-- Connectors required: GitHub (Cowork — either GitHub MCP server or OAuth connector; both must have push access to `mattlawler12-cmd/ignite`)
+- Connectors required: GitHub (Cowork — either GitHub MCP server or OAuth connector; both must have push access to `MLawler-IQ/ignite`)
 
 Install: drag-drop `igniteiq-port.plugin` into the Cowork desktop app inside
 the shared "IgniteIQ Website" project. See `cowork-plugin/igniteiq-port/README.md`

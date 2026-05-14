@@ -16,7 +16,7 @@
 set -uo pipefail
 
 INBOX="$HOME/Google Drive/My Drive/IgniteIQ/Claude Design Exports"
-REPO="$HOME/Desktop/igniteiq-theme-v2"
+REPO="$HOME/ignite"
 EXPORTS="$REPO/exports"
 LOG="$EXPORTS/.watcher.log"
 PROCESSED_DIR="$EXPORTS/.processed"
@@ -209,7 +209,7 @@ APPLESCRIPT
       # Open the repo dir in Terminal so the user can fire `claude` there.
       # macOS has no documented `claude --prompt` flag yet; this is the cleanest
       # cross-version invocation. User pastes ⌘V Enter once Claude is running.
-      /usr/bin/open -a Terminal "$HOME/Desktop/igniteiq-theme-v2"
+      /usr/bin/open -a Terminal "$HOME/ignite"
       log "user: Open in Claude Code"
       ;;
     *)

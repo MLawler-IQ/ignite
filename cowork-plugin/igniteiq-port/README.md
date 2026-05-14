@@ -68,7 +68,7 @@ equivalent paths:
   Generic auth that the local `git` CLI uses for `git push`.
 
 Either works; the skills will use whichever is available. Whichever you
-pick, ensure the auth has push access to `mattlawler12-cmd/ignite`.
+pick, ensure the auth has push access to `MLawler-IQ/ignite`.
 
 Verify the connector shows green before running `/port-iiq-diff`.
 
@@ -105,6 +105,6 @@ attachment-handling path; the zip needs to land at
 
 ## Bug reports
 
-File issues at https://github.com/mattlawler12-cmd/ignite/issues. Include
+File issues at https://github.com/MLawler-IQ/ignite/issues. Include
 the Cowork session ID, the handoff URL (if applicable), and the relevant
 section of `exports/latest/DIFF.md`.

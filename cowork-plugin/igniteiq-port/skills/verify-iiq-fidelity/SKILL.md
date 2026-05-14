@@ -11,11 +11,11 @@ After the GitHub Action deploys the IgniteIQ WP theme to staging, this skill ver
 
 ## Inputs / defaults
 
-- Export root: `~/Desktop/igniteiq-theme-v2/exports/latest/` (resolve with `readlink`).
+- Export root: `~/ignite/exports/latest/` (resolve with `readlink`).
 - Staging base: `https://igniteiqstg.wpenginepowered.com`.
 - Explicit form: `/verify-iiq-fidelity <export-path> <staging-base>`.
 
-If `~/Desktop/igniteiq-theme-v2/exports/latest` is missing, stop and emit:
+If `~/ignite/exports/latest` is missing, stop and emit:
 > No exports/latest symlink found. Drop a Claude Design export into exports/<YYYYMMDD>-<name>/ and `ln -snf` to latest first.
 
 ## Algorithm
@@ -113,5 +113,5 @@ If everything matches, the summary line is `✓ All 6 pages match.` and each sec
 
 ```
 /verify-iiq-fidelity
-/verify-iiq-fidelity ~/Desktop/igniteiq-theme-v2/exports/20260501-pricing-update https://igniteiqstg.wpenginepowered.com
+/verify-iiq-fidelity ~/ignite/exports/20260501-pricing-update https://igniteiqstg.wpenginepowered.com
 ```

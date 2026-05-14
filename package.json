@@ -1,0 +1,24 @@
+{
+  "name": "igniteiq-theme-v2",
+  "version": "1.0.0",
+  "description": "Canonical source for the IgniteIQ WordPress theme. **This repo is the source of truth.**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MLawler-IQ/ignite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MLawler-IQ/ignite/issues"
+  },
+  "homepage": "https://github.com/MLawler-IQ/ignite#readme",
+  "dependencies": {
+    "playwright": "^1.59.1"
+  }
+}

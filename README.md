@@ -39,7 +39,7 @@ Canonical source for the IgniteIQ WordPress theme. **This repo is the source of 
 ## Deploy flow (today)
 
 ```
-Edit in this repo (~/Desktop/igniteiq-theme-v2/)
+Edit in this repo (~/ignite/)
         ↓
 bash deploy.sh             (rsync → Local Sites)
         ↓
@@ -55,7 +55,7 @@ A follow-up session will replace the manual Local-UI push with a **GitHub Action
 **This repo is canonical.** Any change made directly in `~/Local Sites/.../themes/igniteiq-v2/` or in the WP Admin theme editor is **not authoritative** — it lives only in the runtime mirror and **will be overwritten the next time `deploy.sh` runs**.
 
 If you need to change theme code:
-1. Edit it here (in `~/Desktop/igniteiq-theme-v2/igniteiq/...`)
+1. Edit it here (in `~/ignite/igniteiq/...`)
 2. Commit + push to this repo
 3. Run `bash deploy.sh` to mirror to Local
 4. Push from Local to WP Engine staging via Local's UI

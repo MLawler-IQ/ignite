@@ -63,11 +63,11 @@ Per-fire log at `exports/.watcher.log`. Stdout/stderr from launchd at
 ```bash
 # 1. Copy the canonical script outside ~/Desktop/ (TCC requires this)
 mkdir -p ~/scripts/igniteiq
-cp ~/Desktop/igniteiq-theme-v2/scripts/watch-exports.sh ~/scripts/igniteiq/
+cp ~/ignite/scripts/watch-exports.sh ~/scripts/igniteiq/
 chmod +x ~/scripts/igniteiq/watch-exports.sh
 
 # 2. Install the launchd plist
-cp ~/Desktop/igniteiq-theme-v2/scripts/com.igniteiq.export-watcher.plist \
+cp ~/ignite/scripts/com.igniteiq.export-watcher.plist \
    ~/Library/LaunchAgents/
 
 # 3. Load it
@@ -107,10 +107,10 @@ launchctl list | grep igniteiq
 launchctl kickstart -k "gui/$(id -u)/com.igniteiq.export-watcher"
 
 # Tail the watcher log
-tail -f ~/Desktop/igniteiq-theme-v2/exports/.watcher.log
+tail -f ~/ignite/exports/.watcher.log
 
 # Reset processed markers (re-process a previously-handled zip)
-rm ~/Desktop/igniteiq-theme-v2/exports/.processed/<zip-name>.zip.done
+rm ~/ignite/exports/.processed/<zip-name>.zip.done
 
 # Unload the agent (stop watching)
 launchctl bootout "gui/$(id -u)/com.igniteiq.export-watcher"
@@ -128,7 +128,7 @@ A Playwright-based screenshot harness that captures 12 full-page screenshots
 `/visual-iiq-diff` skill, but you can also run it directly:
 
 ```bash
-cd /tmp && node ~/Desktop/igniteiq-theme-v2/scripts/iiq-shoot.js
+cd /tmp && node ~/ignite/scripts/iiq-shoot.js
 ```
 
 Outputs: `exports/.compare/{export,staging}/{home,how-it-works,ontology,company,contact,signin}.png`

@@ -13,19 +13,19 @@ Capture full-page screenshots of all 6 cornerstone IgniteIQ pages on both the lo
 
 ## Prerequisites
 
-- The harness `~/Desktop/igniteiq-theme-v2/scripts/iiq-shoot.js` uses Playwright. Playwright must be installed in the cwd's `node_modules/` (or globally). If the require fails: `npm install playwright` from any dir with a `node_modules/` context, or `npx -y playwright install chromium` first. On first run Playwright downloads Chromium (~150 MB).
-- `~/Desktop/igniteiq-theme-v2/exports/latest` must exist (symlink to a dated export with the 6 cornerstone HTML files at root).
+- The harness `~/ignite/scripts/iiq-shoot.js` uses Playwright. Playwright must be installed in the cwd's `node_modules/` (or globally). If the require fails: `npm install playwright` from any dir with a `node_modules/` context, or `npx -y playwright install chromium` first. On first run Playwright downloads Chromium (~150 MB).
+- `~/ignite/exports/latest` must exist (symlink to a dated export with the 6 cornerstone HTML files at root).
 - Network access required (staging URLs).
 
 ## Algorithm
 
-1. **Sanity-check inputs.** Confirm `~/Desktop/igniteiq-theme-v2/exports/latest` resolves and the 6 expected `.html` files exist directly under the resolved dir (or under its content root — inherit detection from `/diff-iiq-export` if the export nests under `site/` or `igniteiq-website/project/`). If `latest` is missing, stop with the same hint as `/diff-iiq-export`.
+1. **Sanity-check inputs.** Confirm `~/ignite/exports/latest` resolves and the 6 expected `.html` files exist directly under the resolved dir (or under its content root — inherit detection from `/diff-iiq-export` if the export nests under `site/` or `igniteiq-website/project/`). If `latest` is missing, stop with the same hint as `/diff-iiq-export`.
 
 2. **Run the screenshot harness.**
    ```bash
-   cd /tmp && node ~/Desktop/igniteiq-theme-v2/scripts/iiq-shoot.js
+   cd /tmp && node ~/ignite/scripts/iiq-shoot.js
    ```
-   It writes 12 PNGs into `~/Desktop/igniteiq-theme-v2/exports/.compare/{export,staging}/{home,how-it-works,ontology,company,contact,signin}.png`. Stderr emits one line per shot — surface any `goto failed` or `screenshot failed` lines as page-level warnings (don't abort the whole run).
+   It writes 12 PNGs into `~/ignite/exports/.compare/{export,staging}/{home,how-it-works,ontology,company,contact,signin}.png`. Stderr emits one line per shot — surface any `goto failed` or `screenshot failed` lines as page-level warnings (don't abort the whole run).
 
 3. **For each of the 6 pages, compare visually.** Read both PNGs with the Read tool (it presents images visually to the model). For each pair, look at: hero composition (eyebrow + headline + body + CTA), section ordering, diagram fidelity (the export's React/SVG diagrams vs the WP theme's PHP/SVG approximations are the highest-risk drift area), reveal-on-scroll completeness, spacing rhythm, typography scale, footer presence/contents.
 
@@ -35,15 +35,15 @@ Capture full-page screenshots of all 6 cornerstone IgniteIQ pages on both the lo
 
 ## The screenshot harness
 
-Canonical script: `~/Desktop/igniteiq-theme-v2/scripts/iiq-shoot.js`. It launches headless Chromium at 1440x900 viewport, loops over the 6 pages, and for each visits both the `file://` export and the `https://igniteiqstg.wpenginepowered.com/<path>/` staging URL. Per-page steps: `goto` with `waitUntil: 'networkidle'`, scroll top→bottom (400px steps every 80ms) to trigger reveal-on-scroll animations, scroll back to top, wait 800ms for in-flight animations, then `fullPage: true` screenshot. Don't edit this script from inside the skill — it's the canonical version.
+Canonical script: `~/ignite/scripts/iiq-shoot.js`. It launches headless Chromium at 1440x900 viewport, loops over the 6 pages, and for each visits both the `file://` export and the `https://igniteiqstg.wpenginepowered.com/<path>/` staging URL. Per-page steps: `goto` with `waitUntil: 'networkidle'`, scroll top→bottom (400px steps every 80ms) to trigger reveal-on-scroll animations, scroll back to top, wait 800ms for in-flight animations, then `fullPage: true` screenshot. Don't edit this script from inside the skill — it's the canonical version.
 
 ## Per-page comparison
 
 For every cornerstone page, read both pngs and compare. Use absolute paths:
 
 ```
-~/Desktop/igniteiq-theme-v2/exports/.compare/export/<slug>.png
-~/Desktop/igniteiq-theme-v2/exports/.compare/staging/<slug>.png
+~/ignite/exports/.compare/export/<slug>.png
+~/ignite/exports/.compare/staging/<slug>.png
 ```
 
 Slugs: `home`, `how-it-works`, `ontology`, `company`, `contact`, `signin`.
@@ -58,13 +58,13 @@ Number gaps per page with a page-prefix code: home → `H1, H2, …`, how-it-wor
 
 ## Output format
 
-Mimic `~/Desktop/igniteiq-theme-v2/exports/.compare/GAPS.md` exactly:
+Mimic `~/ignite/exports/.compare/GAPS.md` exactly:
 
 ```
 # Visual fidelity gaps: export vs staging
 
 Method: 12 full-page screenshots (1440px wide) captured <YYYY-MM-DD>:
-- Export: file:// rendering of `~/Desktop/igniteiq-theme-v2/exports/latest/{*.html}`
+- Export: file:// rendering of `~/ignite/exports/latest/{*.html}`
 - Staging: live `https://igniteiqstg.wpenginepowered.com/{*}`
 - Both with reveal-on-scroll triggered (scrolled bottom-to-top before capture)
 
@@ -141,7 +141,7 @@ If a page is fully clean: a single row with severity 🟢 and `— matches —` 
 /visual-iiq-diff
 ```
 
-No arguments. Output: stdout report + saved file at `~/Desktop/igniteiq-theme-v2/exports/.compare/GAPS-<YYYYMMDD-HHMMSS>.md`.
+No arguments. Output: stdout report + saved file at `~/ignite/exports/.compare/GAPS-<YYYYMMDD-HHMMSS>.md`.
 
 ## Reportback
 

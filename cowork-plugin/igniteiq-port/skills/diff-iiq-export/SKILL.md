@@ -5,13 +5,13 @@ description: Diff the latest Claude Design export against the live IgniteIQ WP s
 
 # diff-iiq-export
 
-Compare the latest unzipped Claude Design export at `~/Desktop/igniteiq-theme-v2/exports/latest/` against the **live IgniteIQ WP staging site** at `https://igniteiqstg.wpenginepowered.com` and produce a markdown porting checklist. The output tells the porter exactly what content/visuals need to change in `~/Desktop/igniteiq-theme-v2/igniteiq/` (PHP template-parts + `inc/cli.php` seed) to bring staging into byte-equivalent compliance with the export.
+Compare the latest unzipped Claude Design export at `~/ignite/exports/latest/` against the **live IgniteIQ WP staging site** at `https://igniteiqstg.wpenginepowered.com` and produce a markdown porting checklist. The output tells the porter exactly what content/visuals need to change in `~/ignite/igniteiq/` (PHP template-parts + `inc/cli.php` seed) to bring staging into byte-equivalent compliance with the export.
 
 **This skill is READ-ONLY.** Never edit PHP, theme files, exports, or staging. Output goes to stdout only.
 
 ## Convention
 
-- Exports root: `~/Desktop/igniteiq-theme-v2/exports/`
+- Exports root: `~/ignite/exports/`
 - Each export: `exports/<YYYYMMDD>-<short-name>/` — Claude Design has shipped two layouts:
   - older: `<dated>/site/{index.html,…}`
   - newer: `<dated>/igniteiq-website/project/{index.html,…}`
@@ -31,7 +31,7 @@ Compare the latest unzipped Claude Design export at `~/Desktop/igniteiq-theme-v2
 ### Default: `/diff-iiq-export` (no args)
 
 ```bash
-EXPORTS=~/Desktop/igniteiq-theme-v2/exports
+EXPORTS=~/ignite/exports
 NEW_DIR=$(readlink "$EXPORTS/latest")        # e.g. 20260501-pricing-update
 NEW_ROOT="$EXPORTS/$NEW_DIR"
 # Find the actual content root (handles both old and new Claude Design shapes)

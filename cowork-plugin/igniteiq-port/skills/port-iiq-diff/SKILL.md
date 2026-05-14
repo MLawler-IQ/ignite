@@ -7,19 +7,19 @@ description: Port the latest Claude Design export into the IgniteIQ WordPress th
 
 ## What this skill does
 
-Reads `~/Desktop/igniteiq-theme-v2/exports/latest/DIFF.md` (the porting backlog the watcher pre-generated) plus the export's HTML/JS for context, then edits `igniteiq/inc/cli.php` and `igniteiq/template-parts/*.php` to land every "missing on staging" string. Runs `php -l` on every modified file. Prints a summary with `git diff` stats. **Does NOT run git, does NOT touch staging, does NOT auto-commit.** The user reviews the diff in their editor, runs `bash deploy.sh` for a Local visual check, then commits and pushes when satisfied.
+Reads `~/ignite/exports/latest/DIFF.md` (the porting backlog the watcher pre-generated) plus the export's HTML/JS for context, then edits `igniteiq/inc/cli.php` and `igniteiq/template-parts/*.php` to land every "missing on staging" string. Runs `php -l` on every modified file. Prints a summary with `git diff` stats. **Does NOT run git, does NOT touch staging, does NOT auto-commit.** The user reviews the diff in their editor, runs `bash deploy.sh` for a Local visual check, then commits and pushes when satisfied.
 
 ## Inputs (already on disk by the time this skill runs)
 
-- `~/Desktop/igniteiq-theme-v2/exports/latest/DIFF.md` — porting backlog with two sections:
+- `~/ignite/exports/latest/DIFF.md` — porting backlog with two sections:
   - "Missing on staging — porting backlog" (checklist of strings to add)
   - "Extra on staging — review" (strings to remove or ignore)
-- `~/Desktop/igniteiq-theme-v2/exports/latest/{*.html,js/*.js}` — the export source
+- `~/ignite/exports/latest/{*.html,js/*.js}` — the export source
   (content root may be flat, in `site/`, or `igniteiq-website/project/` — auto-detect with `find -maxdepth 4 -name index.html`)
-- `~/Desktop/igniteiq-theme-v2/igniteiq/inc/cli.php` — current `IgniteIQ_CLI::default_pages()` seed
-- `~/Desktop/igniteiq-theme-v2/igniteiq/template-parts/{heroes,sections,diagrams,forms}/*.php` — current renderers
-- `~/Desktop/igniteiq-theme-v2/igniteiq/page-*.php` and `front-page.php` — page templates
-- `~/Desktop/igniteiq-theme-v2/igniteiq/assets/js/contact-form.js` — contact form JS
+- `~/ignite/igniteiq/inc/cli.php` — current `IgniteIQ_CLI::default_pages()` seed
+- `~/ignite/igniteiq/template-parts/{heroes,sections,diagrams,forms}/*.php` — current renderers
+- `~/ignite/igniteiq/page-*.php` and `front-page.php` — page templates
+- `~/ignite/igniteiq/assets/js/contact-form.js` — contact form JS
 
 ## Algorithm
 
@@ -53,8 +53,8 @@ Reads `~/Desktop/igniteiq-theme-v2/exports/latest/DIFF.md` (the porting backlog 
 
 ## Boundaries
 
-- **READS** only: anything under `~/Desktop/igniteiq-theme-v2/exports/`, anything under `~/Desktop/igniteiq-theme-v2/igniteiq/`, current state of files for context.
-- **WRITES** only: files inside `~/Desktop/igniteiq-theme-v2/igniteiq/`. Specifically `igniteiq/inc/cli.php`, `igniteiq/template-parts/**/*.php`, `igniteiq/page-*.php`, `igniteiq/front-page.php`, and `igniteiq/assets/js/contact-form.js`. Never `.github/`, never `scripts/`, never repo-root files (`AGENTS.md`, `MIGRATE.md`, `README.md`, `deploy.sh`), never anything outside `igniteiq/`.
+- **READS** only: anything under `~/ignite/exports/`, anything under `~/ignite/igniteiq/`, current state of files for context.
+- **WRITES** only: files inside `~/ignite/igniteiq/`. Specifically `igniteiq/inc/cli.php`, `igniteiq/template-parts/**/*.php`, `igniteiq/page-*.php`, `igniteiq/front-page.php`, and `igniteiq/assets/js/contact-form.js`. Never `.github/`, never `scripts/`, never repo-root files (`AGENTS.md`, `MIGRATE.md`, `README.md`, `deploy.sh`), never anything outside `igniteiq/`.
 - **NEVER** runs `git`, `bash deploy.sh`, `gh`, or `wp` directly. The user does these.
 - **NEVER** auto-commits.
 - **NEVER** edits the export tree in `exports/`.
@@ -117,8 +117,8 @@ Editing template-parts/heroes/statement.php (1 hardcoded fallback)…
 php -l: 7 files OK.
 
 Files modified:
-  /Users/matthewlawler/Desktop/igniteiq-theme-v2/igniteiq/inc/cli.php
-  /Users/matthewlawler/Desktop/igniteiq-theme-v2/igniteiq/template-parts/heroes/statement.php
+  /Users/matthewlawler/ignite/igniteiq/inc/cli.php
+  /Users/matthewlawler/ignite/igniteiq/template-parts/heroes/statement.php
 
 Strings ported: 175 / 178
 Unmapped (3): see // FIDELITY EXCEPTION comments in:
