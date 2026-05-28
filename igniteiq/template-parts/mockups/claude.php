@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div style="display:grid; grid-template-columns:220px 1fr; min-height:480px; font-family:system-ui, -apple-system, sans-serif;">
-  <aside style="background:#16181C; color:#E8E6E1; padding:20px 16px; border-right:1px solid rgba(255,255,255,0.06);">
+<div class="iiq-mk-shell" style="display:grid; grid-template-columns:220px 1fr; min-height:480px; font-family:system-ui, -apple-system, sans-serif;">
+  <aside class="iiq-mk-aside" style="background:#16181C; color:#E8E6E1; padding:20px 16px; border-right:1px solid rgba(255,255,255,0.06);">
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
       <span style="width:28px; height:28px; border-radius:6px; background:#D97757; display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-weight:800; font-size:16px; font-family:Georgia, serif;">&#8251;</span>
       <span style="font-size:15px; font-weight:600; letter-spacing:-0.01em;">Claude</span>
@@ -41,7 +41,7 @@
         Based on the live ontology in your warehouse &mdash; <b>1,247 jobs</b> and <b>612 leads</b> across Q2 to date:
       </div>
 
-      <div style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); font-family:var(--font-mono); font-size:11.5px;">
+      <div class="iiq-mk-table" style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); font-family:var(--font-mono); font-size:11.5px;">
         <div style="display:grid; grid-template-columns:1.4fr 0.8fr 1fr 0.8fr 0.9fr; background:rgba(255,255,255,0.04); padding:8px 12px; gap:8px; color:rgba(232, 230, 225, 0.6); letter-spacing:0.08em; text-transform:uppercase;">
           <span>Channel</span>
           <span style="text-align:right;">Spend</span>

@@ -46,7 +46,7 @@ $wins = [
     </div>
 
     <!-- KPI row -->
-    <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:1px;background:#20242B;">
+    <div class="iiq-mk-kpis" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:1px;background:#20242B;">
         <?php foreach ($kpis as $k): ?>
             <div style="background:#0F1115;padding:20px 22px;">
                 <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(236,236,236,0.5);"><?= esc_html($k['label']) ?></div>

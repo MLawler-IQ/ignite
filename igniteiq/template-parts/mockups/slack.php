@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div style="display:grid; grid-template-columns:180px 1fr; min-height:440px;">
-  <aside style="background:#3F0F40; color:#FFFFFF; padding:16px 0; font-family: system-ui, -apple-system, sans-serif;">
+<div class="iiq-mk-shell" style="display:grid; grid-template-columns:180px 1fr; min-height:440px;">
+  <aside class="iiq-mk-aside" style="background:#3F0F40; color:#FFFFFF; padding:16px 0; font-family: system-ui, -apple-system, sans-serif;">
     <div style="padding:0 16px 12px; border-bottom:1px solid rgba(255,255,255,0.10); display:flex; align-items:center; justify-content:space-between;">
       <span style="font-weight:700; font-size:15px; letter-spacing:-0.01em;">TAPPS HVAC</span>
       <span style="font-size:11px; opacity:0.5;">&#9662;</span>

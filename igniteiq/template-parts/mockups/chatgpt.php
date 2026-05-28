@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div style="display:grid; grid-template-columns:220px 1fr; min-height:500px; font-family:system-ui, -apple-system, sans-serif;">
-  <aside style="background:#171717; color:#ECECEC; padding:14px 10px; border-right:1px solid rgba(255,255,255,0.06);">
+<div class="iiq-mk-shell" style="display:grid; grid-template-columns:220px 1fr; min-height:500px; font-family:system-ui, -apple-system, sans-serif;">
+  <aside class="iiq-mk-aside" style="background:#171717; color:#ECECEC; padding:14px 10px; border-right:1px solid rgba(255,255,255,0.06);">
     <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px 14px;">
       <div style="display:flex; align-items:center; gap:10px;">
         <span style="width:26px; height:26px; border-radius:50%; background:#FFFFFF; color:#171717; display:inline-flex; align-items:center; justify-content:center; font-family:Georgia, serif; font-weight:800; font-size:14px;">&#10042;</span>
@@ -51,7 +51,7 @@
         Pulled from the IgniteIQ ontology &mdash; <b>YTD across 4,218 completed jobs</b>. Average ticket is misleading; here&rsquo;s true contribution margin after callbacks and rework:
       </div>
 
-      <div style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); font-family:var(--font-mono); font-size:11.5px;">
+      <div class="iiq-mk-table" style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); font-family:var(--font-mono); font-size:11.5px;">
         <div style="display:grid; grid-template-columns:1fr 0.9fr 0.9fr 0.9fr 1.3fr; background:rgba(255,255,255,0.04); padding:8px 12px; gap:8px; color:rgba(236, 236, 236, 0.6); letter-spacing:0.08em; text-transform:uppercase;">
           <span>Technician</span>
           <span style="text-align:right;">Avg ticket</span>

@@ -22,7 +22,7 @@
     <span style="font-family: Consolas, monospace; color:#605E5C;">=ACTUAL!B12 - PLAN!B12</span>
   </div>
 
-  <div style="padding:0; display:grid; grid-template-columns:36px 1fr 140px 140px 140px;">
+  <div class="iiq-mk-sheet" style="padding:0; display:grid; grid-template-columns:36px 1fr 140px 140px 140px;">
     <div style="background:#F3F2F1; border-bottom:1px solid #E1DFDD; border-right:1px solid #E1DFDD; padding:6px 10px; font-size:11px; color:#605E5C; font-weight:600; text-align:center;"></div>
     <div style="background:#F3F2F1; border-bottom:1px solid #E1DFDD; border-right:1px solid #E1DFDD; padding:6px 10px; font-size:11px; color:#605E5C; font-weight:600; text-align:left;">A</div>
     <div style="background:#F3F2F1; border-bottom:1px solid #E1DFDD; border-right:1px solid #E1DFDD; padding:6px 10px; font-size:11px; color:#605E5C; font-weight:600; text-align:left;">B</div>

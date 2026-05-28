@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div style="display:grid; grid-template-columns:240px 1fr; min-height:460px; font-family: system-ui, -apple-system, sans-serif;">
-  <aside style="background:#F6F8FC; border-right:1px solid #E5E7EB; padding:14px 0;">
+<div class="iiq-mk-shell" style="display:grid; grid-template-columns:240px 1fr; min-height:460px; font-family: system-ui, -apple-system, sans-serif;">
+  <aside class="iiq-mk-aside" style="background:#F6F8FC; border-right:1px solid #E5E7EB; padding:14px 0;">
     <div style="display:flex; align-items:center; gap:10px; padding:0 16px 14px;">
       <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:22px; color:#EA4335; font-weight:800; font-size:18px; letter-spacing:-0.04em;">M</span>
       <span style="font-size:18px; color:#5F6368; letter-spacing:-0.01em;">Mail</span>
@@ -29,7 +29,7 @@
 
   <div style="display:flex; flex-direction:column; background:#FFFFFF;">
     <div style="border-bottom:1px solid #E5E7EB;">
-      <div style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:1px solid #F1F3F4; background:#EAF1FB; font-size:13.5px; color:#1F1F1F; font-weight:700; align-items:baseline; position:relative;">
+      <div class="iiq-mk-maillist" style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:1px solid #F1F3F4; background:#EAF1FB; font-size:13.5px; color:#1F1F1F; font-weight:700; align-items:baseline; position:relative;">
         <span style="position:absolute; left:0; top:0; bottom:0; width:3px; background: var(--ignite-500);"></span>
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#1F1F1F;">IgniteIQ Brief</span>
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
@@ -37,21 +37,21 @@
         </span>
         <span style="text-align:right; font-size:12px;">6:00 AM</span>
       </div>
-      <div style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:1px solid #F1F3F4; background:#FFFFFF; font-size:13.5px; color:#5F6368; font-weight:400; align-items:baseline; position:relative;">
+      <div class="iiq-mk-maillist" style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:1px solid #F1F3F4; background:#FFFFFF; font-size:13.5px; color:#5F6368; font-weight:400; align-items:baseline; position:relative;">
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#202124;">Stripe</span>
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
           <b style="color:#202124; font-weight:500;">Weekly summary &middot; TAPPS HVAC</b><span style="color:#5F6368; font-weight:400;"> &mdash; Net volume $284,210 &mdash; up 8.2% week over week.</span>
         </span>
         <span style="text-align:right; font-size:12px;">5:42 AM</span>
       </div>
-      <div style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:1px solid #F1F3F4; background:#FFFFFF; font-size:13.5px; color:#5F6368; font-weight:400; align-items:baseline; position:relative;">
+      <div class="iiq-mk-maillist" style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:1px solid #F1F3F4; background:#FFFFFF; font-size:13.5px; color:#5F6368; font-weight:400; align-items:baseline; position:relative;">
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#202124;">David Park</span>
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
           <b style="color:#202124; font-weight:500;">Re: Q3 hiring plan</b><span style="color:#5F6368; font-weight:400;"> &mdash; I think we hold on the SDR until the August numbers come in.</span>
         </span>
         <span style="text-align:right; font-size:12px;">Mon</span>
       </div>
-      <div style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:none; background:#FFFFFF; font-size:13.5px; color:#5F6368; font-weight:400; align-items:baseline; position:relative;">
+      <div class="iiq-mk-maillist" style="display:grid; grid-template-columns:170px 1fr 70px; gap:16px; padding:11px 18px; border-bottom:none; background:#FFFFFF; font-size:13.5px; color:#5F6368; font-weight:400; align-items:baseline; position:relative;">
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#202124;">Calendly</span>
         <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
           <b style="color:#202124; font-weight:500;">Reminder &middot; 10:30 AM with Mark Reilly</b><span style="color:#5F6368; font-weight:400;"> &mdash; Coffee at Lofty Coffee &mdash; your calendar is clear after.</span>
@@ -64,7 +64,7 @@
       <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
         <h3 style="margin:0; font-family:inherit; font-size:20px; font-weight:500; color:#202124;">Your Tuesday Morning Brief &mdash; May 28</h3>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:4px;">
+      <div class="iiq-mk-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:4px;">
         <div style="padding:12px 14px; background:#E6F4EA; border-left:3px solid #137333; border-radius:4px;">
           <div style="font-size:11px; font-weight:700; color:#137333; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">
             &#10003; Going right
