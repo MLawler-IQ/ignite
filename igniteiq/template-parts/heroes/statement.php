@@ -9,6 +9,19 @@ $primary_cta    = get_sub_field('primary_cta') ?: ['label' => '', 'url' => ''];
 $secondary_cta  = get_sub_field('secondary_cta') ?: ['label' => '', 'url' => ''];
 $stats          = get_sub_field('stats') ?: [];
 
+// Wave V-4 — tagline preset overrides headline_lines when set.
+$tagline_choice = get_sub_field('tagline_choice') ?: '__custom__';
+if ($tagline_choice && $tagline_choice !== '__custom__') {
+    $headline_lines = [['line' => $tagline_choice]];
+}
+
+// Wave V-4 — Statement / Team variant. Team replaces the big tagline with
+// the export's "Built by the operators who ran the trucks." headline.
+$variant = get_sub_field('variant') ?: 'statement';
+if ($variant === 'team') {
+    $headline_lines = [['line' => 'Built by the operators who ran the trucks.']];
+}
+
 // Statement hero typically has a single declarative statement.
 // Concatenate headline_lines into a single statement for h1 rendering.
 $statement = '';

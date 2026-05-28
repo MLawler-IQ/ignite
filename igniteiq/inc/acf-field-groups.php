@@ -190,6 +190,49 @@ if (function_exists('acf_add_local_field_group')) {
                         'sub_fields' => [
                             ['key' => 'field_iiq_hs_eyebrow', 'label' => 'Eyebrow', 'name' => 'eyebrow', 'type' => 'text'],
                             $iiq_headline_lines('hs'),
+                            // Tagline toggle (Wave V-4). The export ships four
+                            // candidate taglines in its dev tweaks panel. If
+                            // `tagline_choice` is set to anything other than
+                            // '__custom__', heroes/statement.php overrides
+                            // headline_lines with the chosen string. Authors who
+                            // want full freedom pick '__custom__' (the default)
+                            // and edit headline_lines directly.
+                            [
+                                'key'           => 'field_iiq_hs_tagline_choice',
+                                'label'         => 'Tagline (preset)',
+                                'name'          => 'tagline_choice',
+                                'type'          => 'select',
+                                'instructions'  => 'Override headline_lines with one of the four export-canonical taglines. Use "Custom" to author headline_lines manually.',
+                                'choices'       => [
+                                    '__custom__'                                           => 'Custom (use headline_lines above)',
+                                    'The Decision Engine for Modern Trades.'               => 'The Decision Engine for Modern Trades.',
+                                    'The Intelligence Decision Engine for Modern Trades.'  => 'The Intelligence Decision Engine for Modern Trades.',
+                                    'The Intelligence Engine for Modern Trades.'           => 'The Intelligence Engine for Modern Trades.',
+                                    'Intelligence Infrastructure for Modern Trades.'       => 'Intelligence Infrastructure for Modern Trades.',
+                                ],
+                                'default_value' => '__custom__',
+                                'allow_null'    => 0,
+                                'return_format' => 'value',
+                            ],
+                            // Variant toggle (Wave V-4). Statement = the big
+                            // single-line tagline hero (current default).
+                            // Team = the "Built by the operators who ran the
+                            // trucks." treatment (the export's dev tweaks
+                            // expose this as the alternative shipped variant).
+                            [
+                                'key'           => 'field_iiq_hs_variant',
+                                'label'         => 'Variant',
+                                'name'          => 'variant',
+                                'type'          => 'select',
+                                'instructions'  => 'Statement = single-line tagline (default). Team = "Built by the operators…" treatment.',
+                                'choices'       => [
+                                    'statement' => 'Statement',
+                                    'team'      => 'Team',
+                                ],
+                                'default_value' => 'statement',
+                                'allow_null'    => 0,
+                                'return_format' => 'value',
+                            ],
                             ['key' => 'field_iiq_hs_subhead', 'label' => 'Subhead', 'name' => 'subhead', 'type' => 'textarea', 'rows' => 3],
                             $iiq_cta_group('hs_primary', 'Primary CTA', 'primary_cta'),
                             $iiq_cta_group('hs_secondary', 'Secondary CTA', 'secondary_cta'),
@@ -609,6 +652,56 @@ if (function_exists('acf_add_local_field_group')) {
                                 'sub_fields'   => [
                                     ['key' => 'field_iiq_ct_row_old', 'label' => 'Old', 'name' => 'old_text', 'type' => 'text'],
                                     ['key' => 'field_iiq_ct_row_new', 'label' => 'New', 'name' => 'new_text', 'type' => 'text'],
+                                ],
+                            ],
+                        ],
+                    ],
+
+                    // ─── intelligence_surfaces ───
+                    // Wave V-1 — Home "Intelligence finds you" 6-surface
+                    // section. The host partial
+                    // (template-parts/sections/intelligence-surfaces.php)
+                    // ships with hardcoded fallbacks pulled from
+                    // exports/latest/js/IntelligenceSurfaces.jsx, so seeding
+                    // the surfaces repeater is optional — leave it empty
+                    // and the partial renders the canonical 6 surfaces.
+                    'layout_iiq_intelligence_surfaces' => [
+                        'key'        => 'layout_iiq_intelligence_surfaces',
+                        'name'       => 'intelligence_surfaces',
+                        'label'      => 'Section · Intelligence surfaces',
+                        'display'    => 'block',
+                        'sub_fields' => [
+                            ['key' => 'field_iiq_isurf_eyebrow',       'label' => 'Eyebrow',       'name' => 'eyebrow',       'type' => 'text'],
+                            ['key' => 'field_iiq_isurf_headline_lead', 'label' => 'Headline lead', 'name' => 'headline_lead', 'type' => 'text'],
+                            ['key' => 'field_iiq_isurf_headline_gap',  'label' => 'Headline gap',  'name' => 'headline_gap',  'type' => 'text'],
+                            ['key' => 'field_iiq_isurf_body',          'label' => 'Body',          'name' => 'body',          'type' => 'textarea', 'rows' => 3],
+                            [
+                                'key'          => 'field_iiq_isurf_surfaces',
+                                'label'        => 'Surfaces (leave empty to use export defaults)',
+                                'name'         => 'surfaces',
+                                'type'         => 'repeater',
+                                'button_label' => 'Add surface',
+                                'sub_fields'   => [
+                                    ['key' => 'field_iiq_isurf_tool',    'label' => 'Tool',    'name' => 'tool',    'type' => 'text', 'instructions' => 'e.g. Slack, Gmail, Excel, iMessage, Claude, ChatGPT'],
+                                    ['key' => 'field_iiq_isurf_role',    'label' => 'Role',    'name' => 'role',    'type' => 'text', 'instructions' => 'e.g. Operations lead, CEO, CFO'],
+                                    ['key' => 'field_iiq_isurf_heading', 'label' => 'Heading', 'name' => 'heading', 'type' => 'text'],
+                                    ['key' => 'field_iiq_isurf_body',    'label' => 'Body',    'name' => 'body',    'type' => 'textarea', 'rows' => 4],
+                                    [
+                                        'key' => 'field_iiq_isurf_mockup',
+                                        'label' => 'Mockup slug',
+                                        'name' => 'mockup',
+                                        'type' => 'select',
+                                        'choices' => [
+                                            'slack'    => 'slack',
+                                            'gmail'    => 'gmail',
+                                            'excel'    => 'excel',
+                                            'imessage' => 'imessage',
+                                            'claude'   => 'claude',
+                                            'chatgpt'  => 'chatgpt',
+                                        ],
+                                        'default_value' => 'slack',
+                                        'return_format' => 'value',
+                                    ],
                                 ],
                             ],
                         ],

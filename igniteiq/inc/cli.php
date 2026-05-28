@@ -121,7 +121,18 @@ if (!class_exists('IgniteIQ_CLI')) {
                 return 0;
             }
 
-            $page = get_page_by_path($slug);
+            // Look in any post status so a draft 'ride-along' is reused
+            // instead of being recreated as a duplicate publish.
+            $page = get_page_by_path($slug, OBJECT, 'page');
+            if (!$page) {
+                $hits = get_posts([
+                    'name'        => $slug,
+                    'post_type'   => 'page',
+                    'post_status' => 'any',
+                    'numberposts' => 1,
+                ]);
+                $page = $hits ? $hits[0] : null;
+            }
             if ($page) {
                 return $page->ID;
             }
@@ -130,7 +141,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                 'post_title'  => $title,
                 'post_name'   => $slug,
                 'post_type'   => 'page',
-                'post_status' => 'publish',
+                'post_status' => self::default_post_status_for_slug($slug),
             ]);
             return is_wp_error($id) ? 0 : $id;
         }
@@ -146,7 +157,23 @@ if (!class_exists('IgniteIQ_CLI')) {
                 'company'      => self::page_company(),
                 'contact'      => self::page_contact(),
                 'signin'       => self::page_signin(),
+                'ride-along'   => self::page_ride_along(),
             ];
+        }
+
+        /**
+         * Per-slug default WP post_status when a page is auto-created. Slugs
+         * not listed here default to 'publish'. Ride-along ships unpublished
+         * because Demo.jsx port is staged for a later wave — the page exists
+         * so the nav item can be wired up, but stays out of the public site
+         * (and out of the nav, see template-parts/nav.php) until Matt
+         * publishes it from WP admin.
+         */
+        private static function default_post_status_for_slug($slug) {
+            $map = [
+                'ride-along' => 'draft',
+            ];
+            return isset($map[$slug]) ? $map[$slug] : 'publish';
         }
 
         // ───────────────────────────────────────────────────────────
@@ -159,9 +186,15 @@ if (!class_exists('IgniteIQ_CLI')) {
         private static function page_home() {
             return [
                 // HeroStatement (Hero.js, App.js: showStatement=true, statement='decision')
+                // Wave V-4 — tagline_choice / variant toggles let WP admins
+                // swap headline without touching seed. tagline_choice values
+                // are the four export-canonical taglines. headline_lines
+                // remains the fidelity fallback for the default option.
                 [
                     'acf_fc_layout'  => 'hero_statement',
                     'eyebrow'        => '',
+                    'tagline_choice' => 'The Decision Engine for Modern Trades.',
+                    'variant'        => 'statement',
                     'headline_lines' => [
                         ['line' => 'The Decision Engine for Modern Trades.'],
                     ],
@@ -285,10 +318,28 @@ if (!class_exists('IgniteIQ_CLI')) {
                     'closing_line'   => 'Every decision — faster, smarter, and right.',
                 ],
 
-                // WhatChangesSection (SectionsA.jsx, index="05" label="What changes for you")
-                // Per export 20260501: pillars rewritten Speed/Quality/Trust → Clarity/Control/Trust;
-                // headline retitled "What changes when the data actually works."; lived-examples
-                // (scenarios) block removed in source (SectionsA.jsx:313 "// (Lived examples block removed)").
+                // Wave V-1 — IntelligenceSurfaces ("Where intelligence shows up").
+                // Source: exports/latest/js/IntelligenceSurfaces.jsx (SURFACES_CONFIG,
+                // lines 1034–1083). The host partial ships hardcoded fallbacks pulled
+                // from the export so an empty seed renders the canonical 6 surfaces
+                // (Slack / Gmail / Excel / iMessage / Claude / ChatGPT) with mock UI
+                // chrome (template-parts/mockups/*.php). To customize, add a
+                // `surfaces` repeater on the home page in WP admin.
+                [
+                    'acf_fc_layout' => 'intelligence_surfaces',
+                ],
+
+                // FIDELITY EXCEPTION (Wave V-4, 2026-05-28): the
+                // "WhatChangesSection" Clarity/Control/Trust pillars block is
+                // removed from /home/ to match export
+                // 20260528-igniteiq-website-2-5-new. The export folds this
+                // story into the new "Intelligence finds you" channel-scenes
+                // section (Wave V-1) and the existing stack-diagram closing
+                // line "One model of your business. Every product, every
+                // object, every system reads from it." (cli.php:316). Block
+                // preserved here in case the customer wants it restored —
+                // uncomment to bring back.
+                /*
                 [
                     'acf_fc_layout' => 'section_pillars',
                     'settings' => [
@@ -322,6 +373,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                     ],
                     'scenarios' => [],
                 ],
+                */
 
                 // InvestInOutcomesSection (InvestInOutcomes.jsx, index="06" label="The path")
                 // Per export 20260501: pillars rewritten CLARITY/CONTROL/CONFIDENCE →
@@ -977,6 +1029,24 @@ if (!class_exists('IgniteIQ_CLI')) {
                     'form_type' => 'signin',
                 ],
             ];
+        }
+
+        // ───────────────────────────────────────────────────────────
+        // RIDE ALONG — Demo.jsx port (Wave V-1 follow-up).
+        // Source: exports/latest/demo.html + js/Demo.jsx (650 lines).
+        // The page is rendered by page-ride-along.php which calls the
+        // self-contained section partial
+        // template-parts/sections/ride-along-page.php — bypassing the
+        // ACF flexible-content pipeline. Returning an empty array here
+        // leaves page_sections blank in WP admin while still letting
+        // find_or_create_page seed the page itself.
+        //
+        // The page is created with post_status=draft (see
+        // default_post_status_for_slug). Nav auto-appends "Ride along"
+        // once the page is published (see template-parts/nav.php).
+        // ───────────────────────────────────────────────────────────
+        private static function page_ride_along() {
+            return [];
         }
     }
 }

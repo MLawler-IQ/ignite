@@ -47,6 +47,46 @@ if (empty($items)) {
         ['label' => 'Company',      'href' => home_url('/company/')],
     ];
 }
+
+// Auto-append "Ride along" between Ontology and Company when the page
+// is published, regardless of whether the source was the WP primary menu
+// or the hardcoded fallback. The page is seeded as draft by cli.php
+// (Wave V-3) so the nav stays clean until Matt publishes from WP admin.
+// If admin has already added Ride along to the primary menu by hand we
+// skip the auto-append to avoid a duplicate.
+$ride_along = get_page_by_path('ride-along', OBJECT, 'page');
+if ($ride_along && $ride_along->post_status === 'publish') {
+    $ride_along_url = home_url('/ride-along/');
+    $already_present = false;
+    foreach ($items as $it) {
+        if (rtrim($it['href'], '/') === rtrim($ride_along_url, '/')
+            || stripos($it['label'], 'Ride along') === 0) {
+            $already_present = true;
+            break;
+        }
+    }
+    if (!$already_present) {
+        $insert_idx = count($items);
+        foreach ($items as $i => $it) {
+            if (stripos($it['label'], 'Company') === 0) {
+                $insert_idx = $i;
+                break;
+            }
+        }
+        array_splice($items, $insert_idx, 0, [[
+            'label' => 'Ride along',
+            'href'  => $ride_along_url,
+        ]]);
+    }
+}
+
+// Sign-in page renders a minimal nav — drop the link row entirely so
+// the auth surface stays uncluttered (visual-iiq-diff SI1, V-3 lock).
+$iiq_is_signin_for_nav = (function_exists('is_page_template') && is_page_template('page-signin.php'))
+    || (function_exists('is_page') && is_page('signin'));
+if ($iiq_is_signin_for_nav) {
+    $items = [];
+}
 $signin_url  = home_url('/signin/');
 $contact_url = home_url('/contact/');
 ?>
@@ -66,10 +106,12 @@ $contact_url = home_url('/contact/');
       <?php endforeach; ?>
     </ul>
 
+    <?php if (!$iiq_is_signin_for_nav): ?>
     <div class="iiq-nav-desktop" style="margin-left:auto;display:flex;gap:20px;align-items:center;">
       <a href="<?= esc_url($signin_url) ?>" style="font-weight:500;color:<?= esc_attr($fg_muted) ?>;text-decoration:none;font-size:16px;">Sign in</a>
       <a href="<?= esc_url($contact_url) ?>" style="font-weight:500;color:<?= esc_attr($fg_muted) ?>;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-size:16px;">Contact <span style="font-size:13px;">→</span></a>
     </div>
+    <?php endif; ?>
 
     <button type="button" class="iiq-nav-burger" data-iiq-nav-burger aria-label="Open menu" aria-expanded="false" aria-controls="iiq-nav-drawer" style="margin-left:auto;appearance:none;background:transparent;border:none;cursor:pointer;padding:8px;color:<?= esc_attr($fg) ?>;align-items:center;justify-content:center;">
       <span aria-hidden="true" style="position:relative;width:22px;height:14px;display:inline-block;">
