@@ -92,7 +92,7 @@ $surfaces     = (is_array($surfaces_acf) && !empty($surfaces_acf)) ? $surfaces_a
             </p>
         <?php endif; ?>
 
-        <div style="margin-top:96px;display:flex;flex-direction:column;gap:96px;">
+        <div class="iiq-surface-stack" style="margin-top:96px;display:flex;flex-direction:column;gap:96px;">
             <?php foreach ($surfaces as $i => $surface):
                 $reversed = ($i % 2 === 1);
                 $tool    = isset($surface['tool'])    ? $surface['tool']    : '';
@@ -102,7 +102,7 @@ $surfaces     = (is_array($surfaces_acf) && !empty($surfaces_acf)) ? $surfaces_a
                 $mockup  = isset($surface['mockup'])  ? $surface['mockup']  : '';
                 $step    = '0' . ($i + 1);
             ?>
-                <div style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:80px;align-items:center;direction:<?= $reversed ? 'rtl' : 'ltr' ?>;">
+                <div class="iiq-surface-row" style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:80px;align-items:center;direction:<?= $reversed ? 'rtl' : 'ltr' ?>;">
                     <div style="direction:ltr;">
                         <div style="display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--fg-tertiary);font-weight:500;">
                             <span style="font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--fg-primary);letter-spacing:0;text-transform:none;"><?= esc_html($step) ?></span>

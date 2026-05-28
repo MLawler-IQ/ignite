@@ -90,7 +90,7 @@ $cast = [
             <span style="color:var(--fg-tertiary);display:block;">From the first coffee to the last truck back in the yard.</span>
         </h1>
 
-        <div style="margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:flex-start;">
+        <div class="iiq-grid-split" style="margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:flex-start;">
             <p style="font-size:19px;line-height:1.6;color:var(--fg-primary);margin:0;font-weight:500;">
                 Meet <strong>Scott Reilly</strong>, CEO of TAPPS HVAC. Six trucks. Four markets. One Tuesday.
             </p>
@@ -100,7 +100,7 @@ $cast = [
         </div>
 
         <!-- Cast of characters strip -->
-        <div style="margin-top:64px;padding-top:32px;border-top:1px solid var(--border-default);display:grid;grid-template-columns:repeat(4, 1fr);gap:32px;">
+        <div class="iiq-grid-4" style="margin-top:64px;padding-top:32px;border-top:1px solid var(--border-default);display:grid;grid-template-columns:repeat(4, 1fr);gap:32px;">
             <?php foreach ($cast as [$name, $role]): ?>
                 <div>
                     <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-tertiary);"><?= esc_html($role) ?></div>
@@ -122,7 +122,7 @@ $cast = [
     $reversed = ($i % 2 === 1);
     $bg = ($i % 2 === 0) ? 'var(--bg-canvas)' : 'var(--bg-sunken)';
 ?>
-<section id="scene-<?= (int) $i ?>" data-scene-idx="<?= (int) $i ?>" style="padding:120px 32px;background:<?= $bg ?>;border-top:1px solid var(--border-subtle);">
+<section id="scene-<?= (int) $i ?>" data-scene-idx="<?= (int) $i ?>" class="iiq-scene-section" style="padding:120px 32px;background:<?= $bg ?>;border-top:1px solid var(--border-subtle);">
     <div style="max-width:1320px;margin:0 auto;">
         <!-- Time + role banner -->
         <div style="display:inline-flex;align-items:baseline;gap:18px;padding-bottom:18px;border-bottom:2px solid var(--ink-1000);margin-bottom:56px;">
@@ -134,7 +134,7 @@ $cast = [
             </span>
         </div>
 
-        <div style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:80px;align-items:center;direction:<?= $reversed ? 'rtl' : 'ltr' ?>;">
+        <div class="iiq-surface-row" style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:80px;align-items:center;direction:<?= $reversed ? 'rtl' : 'ltr' ?>;">
             <!-- Narrative -->
             <div style="direction:ltr;">
                 <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-tertiary);font-weight:600;margin-bottom:18px;">

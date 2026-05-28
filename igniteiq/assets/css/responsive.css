@@ -549,3 +549,35 @@ img[width], svg[width] { height: auto; }
 @media (max-width: 640px) {
   .iiq-textarea { min-height: 96px !important; }
 }
+
+/* ── Intelligence Surfaces + Ride-along scene rows ───────────────────
+   Desktop: 0.85fr 1.15fr two-up, alternating direction:rtl so the mockup
+   swaps sides row to row. On tablet/phone we stack to a single column.
+   Resetting direction:ltr forces document order (copy first, mockup
+   below) on every row regardless of the desktop rtl flip — so the
+   reading order stays copy → exhibit on mobile. The mockup column has
+   min-width:0 already, so it fills the narrow column without overflow. */
+@media (max-width: 900px) {
+  .iiq-surface-row {
+    grid-template-columns: 1fr !important;
+    direction: ltr !important;
+    gap: 28px !important;
+    align-items: stretch !important;
+  }
+}
+@media (max-width: 640px) {
+  .iiq-surface-row { gap: 24px !important; }
+  /* trim the 80px outer rhythm between stacked scenes so the page
+     isn't an endless scroll on a phone */
+  .iiq-surface-stack { gap: 64px !important; }
+}
+
+/* Ride-along scene sections: ease the 120px vertical padding + 32px
+   gutter down on small screens so each scene isn't marooned in
+   whitespace once the columns stack. */
+@media (max-width: 900px) {
+  .iiq-scene-section { padding: 80px 24px !important; }
+}
+@media (max-width: 640px) {
+  .iiq-scene-section { padding: 64px 20px !important; }
+}
