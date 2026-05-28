@@ -148,9 +148,15 @@ $cast = [
                 </p>
             </div>
 
-            <!-- Mockup (chrome box host) -->
+            <!-- Mockup (WindowFrame chrome host — ports IntelligenceSurfaces.jsx:87) -->
             <div style="direction:ltr;min-width:0;">
-                <div style="padding:24px;background:var(--bg-canvas);border:1px solid var(--border-default);border-radius:14px;box-shadow:0 30px 60px -25px rgba(15, 15, 18, 0.18), 0 8px 20px -10px rgba(15, 15, 18, 0.08);">
+                <?php $wf_dark = in_array($scene['mockup'], ['slack', 'imessage', 'claude', 'chatgpt'], true); ?>
+                <div style="width:100%;border-radius:12px;overflow:hidden;background:<?= $wf_dark ? '#1A1D21' : '#FFFFFF' ?>;border:<?= $wf_dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid var(--border-default)' ?>;box-shadow:0 30px 60px -25px rgba(15, 15, 18, 0.18), 0 8px 20px -10px rgba(15, 15, 18, 0.08);display:flex;flex-direction:column;">
+                    <div style="padding:12px 14px;background:<?= $wf_dark ? '#222529' : '#F5F5F4' ?>;border-bottom:<?= $wf_dark ? '1px solid rgba(255,255,255,0.06)' : '1px solid var(--border-subtle)' ?>;display:flex;align-items:center;gap:7px;">
+                        <span style="width:11px;height:11px;border-radius:50%;background:#FF5F57;"></span>
+                        <span style="width:11px;height:11px;border-radius:50%;background:#FEBC2E;"></span>
+                        <span style="width:11px;height:11px;border-radius:50%;background:#28C840;"></span>
+                    </div>
                     <?php get_template_part('template-parts/mockups/' . $scene['mockup']); ?>
                 </div>
             </div>
