@@ -163,16 +163,17 @@ if (!class_exists('IgniteIQ_CLI')) {
 
         /**
          * Per-slug default WP post_status when a page is auto-created. Slugs
-         * not listed here default to 'publish'. Ride-along ships unpublished
-         * because Demo.jsx port is staged for a later wave — the page exists
-         * so the nav item can be wired up, but stays out of the public site
-         * (and out of the nav, see template-parts/nav.php) until Matt
-         * publishes it from WP admin.
+         * not listed here default to 'publish'.
+         *
+         * Ride-along originally shipped as 'draft' while the Demo.jsx port was
+         * in progress. The full page (7 scenes + dashboard + 6 mock surfaces)
+         * is now complete and reviewed on staging, so it publishes on create
+         * like every other cornerstone page. Note: this only affects pages at
+         * CREATE time — find_or_create_page never downgrades an existing
+         * page's status, so re-seeding won't unpublish a live page.
          */
         private static function default_post_status_for_slug($slug) {
-            $map = [
-                'ride-along' => 'draft',
-            ];
+            $map = [];
             return isset($map[$slug]) ? $map[$slug] : 'publish';
         }
 
