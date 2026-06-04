@@ -851,20 +851,18 @@ if (!class_exists('IgniteIQ_CLI')) {
                     'lede'           => 'The team behind IgniteIQ is back at it to revolutionize home services in the AI economy. Owners, operators, and the architects who built the billion-dollar platform the industry runs on today, are building for a new future that will change the home services landscape forever.',
                     'featured_count' => 3,
                     'avatar_style'   => 'square',
-                    // Card order per Matt's 2026-06-04 request:
-                    // Darren, Ryan, Scott (founder row), then Josh, Matt.
+                    // Card order matches export Company.jsx 2-6 founders
+                    // array: Scott, Ryan, Darren (founder row), then Josh,
+                    // Matt. Darren restored to the public grid per Matt's
+                    // 2026-06-04 decision (supersedes the 2026-04-29 removal).
                     'members' => [
-                        // Darren Merritt restored to the public team grid per
-                        // Matt's 2026-06-04 decision (supersedes the
-                        // 2026-04-29 removal). Export 2-6 lists him as a
-                        // founder.
                         [
-                            'name'       => 'Darren Merritt',
-                            'role'       => 'VP of Engineering',
-                            'credential' => 'Former VP of Engineering at ServiceTitan.',
-                            'bio'        => 'Built and scaled the engineering behind the billion-dollar platform, then served as CPO at PipeDreams, a PE-backed home services roll-up. Brings the hard-won perspective on what breaks at scale and how to engineer past it.',
+                            'name'       => 'Scott Rayden',
+                            'role'       => 'Founder & CEO',
+                            'credential' => 'Multi-exit entrepreneur and home services owner.',
+                            'bio'        => 'Built and exited an electrical / HVAC company, ran the largest independent customer-acquisition agency in the U.S. 350 people, $2B/yr in managed media, six M&A transactions, $150M+ in exit value. He has lived the operator side of the problem and is obsessed with bringing innovation and intelligence to the trades.',
                             'photo'      => false,
-                            'photo_slug' => 'darren',
+                            'photo_slug' => 'scott',
                         ],
                         [
                             'name'       => 'Ryan Sciandri',
@@ -875,12 +873,12 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'photo_slug' => 'ryan',
                         ],
                         [
-                            'name'       => 'Scott Rayden',
-                            'role'       => 'Founder & CEO',
-                            'credential' => 'Multi-exit entrepreneur and home services owner.',
-                            'bio'        => 'Built and exited an electrical / HVAC company, ran the largest independent customer-acquisition agency in the U.S. 350 people, $2B/yr in managed media, six M&A transactions, $150M+ in exit value. He has lived the operator side of the problem and is obsessed with bringing innovation and intelligence to the trades.',
+                            'name'       => 'Darren Merritt',
+                            'role'       => 'VP of Engineering',
+                            'credential' => 'Former VP of Engineering at ServiceTitan.',
+                            'bio'        => 'Built and scaled the engineering behind the billion-dollar platform, then served as CPO at PipeDreams, a PE-backed home services roll-up. Brings the hard-won perspective on what breaks at scale and how to engineer past it.',
                             'photo'      => false,
-                            'photo_slug' => 'scott',
+                            'photo_slug' => 'darren',
                         ],
                         [
                             'name'       => 'Josh Scott',
