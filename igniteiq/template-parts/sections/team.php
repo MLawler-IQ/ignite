@@ -69,18 +69,24 @@ if (!function_exists('iiq_team_card')) {
         ob_start(); ?>
         <article style="border:1px solid var(--border-default,#C9C5BD);background:var(--bg-canvas,#fff);display:flex;flex-direction:column;height:100%;">
             <div style="padding:16px 16px 0;">
+                <?php
+                // Export renders all team headshots in a uniform grayscale
+                // treatment — match it with a CSS filter (no quality loss,
+                // normalizes mixed-colour source photos).
+                $iiq_photo_gray = 'filter:grayscale(100%);-webkit-filter:grayscale(100%);';
+                ?>
                 <?php if ($has_photo): ?>
                     <div style="width:100%;aspect-ratio:4 / 5;overflow:hidden;background:var(--bg-sunken,#F4EFE4);display:block;">
                         <?= wp_get_attachment_image(
                             (int) $photo['ID'],
                             'medium_large',
                             false,
-                            ['style' => 'width:100%;height:100%;object-fit:cover;display:block;', 'alt' => esc_attr($name)]
+                            ['style' => 'width:100%;height:100%;object-fit:cover;display:block;' . $iiq_photo_gray, 'alt' => esc_attr($name)]
                         ) ?>
                     </div>
                 <?php elseif ($theme_src): ?>
                     <div style="width:100%;aspect-ratio:4 / 5;overflow:hidden;background:var(--bg-sunken,#F4EFE4);display:block;">
-                        <img src="<?= esc_url($theme_src) ?>" alt="<?= esc_attr($name) ?>" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+                        <img src="<?= esc_url($theme_src) ?>" alt="<?= esc_attr($name) ?>" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;<?= $iiq_photo_gray ?>">
                     </div>
                 <?php else: ?>
                     <div aria-hidden="true" style="width:100%;aspect-ratio:4 / 5;background:var(--bg-sunken,#F4EFE4);display:flex;align-items:center;justify-content:center;">
