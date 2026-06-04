@@ -716,8 +716,10 @@ if (function_exists('acf_add_local_field_group')) {
                         'sub_fields' => [
                             $iiq_settings_group_for('team'),
                             ['key' => 'field_iiq_tm_headline',      'label' => 'Headline',      'name' => 'headline',      'type' => 'text'],
-                            ['key' => 'field_iiq_tm_headline_lead', 'label' => 'Headline lead', 'name' => 'headline_lead', 'type' => 'text'],
-                            ['key' => 'field_iiq_tm_headline_gap',  'label' => 'Headline gap',  'name' => 'headline_gap',  'type' => 'text'],
+                            ['key' => 'field_iiq_tm_headline_lead', 'label' => 'Headline lead', 'name' => 'headline_lead', 'type' => 'text', 'instructions' => 'Stacked headline lines (HTML <br> allowed). E.g. "Operators.<br>Innovators."'],
+                            ['key' => 'field_iiq_tm_headline_gap',  'label' => 'Headline gap',  'name' => 'headline_gap',  'type' => 'text', 'instructions' => 'Final headline line, rendered in tertiary/muted colour. E.g. "Architects."'],
+                            ['key' => 'field_iiq_tm_lede',          'label' => 'Lede',          'name' => 'lede',          'type' => 'textarea', 'rows' => 4, 'instructions' => 'Optional intro paragraph. When set, the header renders as a two-column layout (headline left, lede right).'],
+                            ['key' => 'field_iiq_tm_featured',      'label' => 'Featured count','name' => 'featured_count', 'type' => 'number', 'default_value' => 0, 'instructions' => 'How many members render in the top row (3-up, large). Remaining members render in a centered 2-up row. 0 = single uniform 3-col grid.'],
                             [
                                 'key' => 'field_iiq_tm_avatar_style',
                                 'label' => 'Avatar style',
@@ -739,6 +741,7 @@ if (function_exists('acf_add_local_field_group')) {
                                 'sub_fields'   => [
                                     ['key' => 'field_iiq_tm_name', 'label' => 'Name', 'name' => 'name', 'type' => 'text'],
                                     ['key' => 'field_iiq_tm_role', 'label' => 'Role', 'name' => 'role', 'type' => 'text'],
+                                    ['key' => 'field_iiq_tm_credential', 'label' => 'Credential', 'name' => 'credential', 'type' => 'text', 'instructions' => 'One-line credential, rendered as a bold display lead above the bio.'],
                                     ['key' => 'field_iiq_tm_bio', 'label' => 'Bio', 'name' => 'bio', 'type' => 'textarea', 'rows' => 4],
                                     ['key' => 'field_iiq_tm_photo', 'label' => 'Photo', 'name' => 'photo', 'type' => 'image', 'return_format' => 'array'],
                                 ],

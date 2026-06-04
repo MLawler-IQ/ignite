@@ -835,29 +835,91 @@ if (!class_exists('IgniteIQ_CLI')) {
                     'dark'          => false,
                 ],
 
-                // WhatWeAre (Company.js, index="01" label="We’re not an AI company")
+                // TeamDeep (Company.jsx 2-6, index="01" label="The team").
+                // Render order moved up to immediately follow the hero.
+                [
+                    'acf_fc_layout' => 'section_team',
+                    'settings' => [
+                        'section_index' => '01',
+                        'section_label' => 'The team',
+                        'theme_variant' => 'light',
+                    ],
+                    // Two-column header: stacked headline left, lede right.
+                    'headline'       => 'Operators. Innovators. Architects.',
+                    'headline_lead'  => 'Operators.<br>Innovators.',
+                    'headline_gap'   => 'Architects.',
+                    'lede'           => 'The team behind IgniteIQ is back at it to revolutionize home services in the AI economy. Owners, operators, and the architects who built the billion-dollar platform the industry runs on today, are building for a new future that will change the home services landscape forever.',
+                    'featured_count' => 3,
+                    'avatar_style'   => 'square',
+                    'members' => [
+                        [
+                            'name'       => 'Scott Rayden',
+                            'role'       => 'Founder & CEO',
+                            'credential' => 'Multi-exit entrepreneur and home services owner.',
+                            'bio'        => 'Built and exited an electrical / HVAC company, ran the largest independent customer-acquisition agency in the U.S. 350 people, $2B/yr in managed media, six M&A transactions, $150M+ in exit value. He has lived the operator side of the problem and is obsessed with bringing innovation and intelligence to the trades.',
+                            'photo'      => false,
+                        ],
+                        [
+                            'name'       => 'Ryan Sciandri',
+                            'role'       => 'CTO',
+                            'credential' => 'Former Chief Data Architect at ServiceTitan.',
+                            'bio'        => 'Led data architecture across every department of the platform that digitized the industry. Knows home services data at the schema level better than almost anyone alive — and knows exactly where the seams are.',
+                            'photo'      => false,
+                        ],
+                        // Darren Merritt restored to the public team grid per
+                        // Matt's 2026-06-04 decision (supersedes the
+                        // 2026-04-29 removal). Export 2-6 lists him as a
+                        // founder.
+                        [
+                            'name'       => 'Darren Merritt',
+                            'role'       => 'VP of Engineering',
+                            'credential' => 'Former VP of Engineering at ServiceTitan.',
+                            'bio'        => 'Built and scaled the engineering behind the billion-dollar platform, then served as CPO at PipeDreams, a PE-backed home services roll-up. Brings the hard-won perspective on what breaks at scale and how to engineer past it.',
+                            'photo'      => false,
+                        ],
+                        [
+                            'name'       => 'Josh Scott',
+                            'role'       => 'Go To Market',
+                            'credential' => 'Turns a signed contract into a live intelligence engine in days.',
+                            'bio'        => 'Owns the deployment motion and the customer experience from kickoff through compounding production use. The reason go-live is measured in days, not months.',
+                            'photo'      => false,
+                        ],
+                        [
+                            'name'       => 'Matt Lawler',
+                            'role'       => 'Marketing',
+                            'credential' => 'Builds the product surface operators actually live in.',
+                            'bio'        => 'Shapes the Armory dashboards, the agent workflows, and the ontology authoring tools — translating how operators run their business into an interface that runs on top of the framework.',
+                            'photo'      => false,
+                        ],
+                    ],
+                ],
+
+                // WhatWeAre (Company.jsx 2-6, index="02" label="We’re not an AI company")
                 [
                     'acf_fc_layout' => 'section_split',
                     'settings' => [
-                        'section_index' => '01',
+                        'section_index' => '02',
                         'section_label' => 'We’re not an AI company',
                         'theme_variant' => 'light',
                     ],
                     'eyebrow'  => '',
-                    'headline' => 'We’re not an AI company.',
+                    'headline' => 'We’re not an AI company. We are the foundation AI runs on.',
                     'headline_lead' => 'We’re not an AI',
-                    'headline_gap'  => 'company.',
-                    'body'     => '<p>We’re not here to sell you a new flashy tool. We build the infrastructure that makes your systems, tools, and AI actually work. We don’t rent access. We build it. You keep it.</p>',
+                    'headline_gap'  => 'company. We are the foundation AI runs on.',
+                    // FIDELITY: lowercase "allowing" + the trailing fragment
+                    // are verbatim from Company.jsx 2-6 (line 63). Source copy
+                    // reads slightly rough; ported byte-accurate per contract.
+                    'body'     => '<p>We’re not here to sell you a new flashy tool. We build the infrastructure that makes your systems, tools, agents, automations, and AI actually work. allowing you to build for the future.</p>',
                     'media_slot'  => 'diagram',
                     'diagram_key' => '',
                     'reverse'  => false,
                 ],
 
-                // FoundingStory (Company.js, index="02" label="The founding story")
+                // FoundingStory (Company.jsx 2-6, index="03" label="The founding story")
                 [
                     'acf_fc_layout' => 'section_prose',
                     'settings' => [
-                        'section_index' => '02',
+                        'section_index' => '03',
                         'section_label' => 'The founding story',
                         'theme_variant' => 'sunken',
                     ],
@@ -872,11 +934,11 @@ if (!class_exists('IgniteIQ_CLI')) {
                     ],
                 ],
 
-                // MissionPrinciples (Company.js, index="03" label="What we believe")
+                // MissionPrinciples (Company.jsx 2-6, index="04" label="What we believe")
                 [
                     'acf_fc_layout' => 'section_pillars',
                     'settings' => [
-                        'section_index' => '03',
+                        'section_index' => '04',
                         'section_label' => 'What we believe',
                         'theme_variant' => 'light',
                     ],
@@ -891,61 +953,9 @@ if (!class_exists('IgniteIQ_CLI')) {
                     'items' => [
                         ['index_number' => '01', 'title' => 'Your data is yours.',             'body' => 'It lives in your cloud. The vendor that won’t agree to that is renting you back your own business.'],
                         ['index_number' => '02', 'title' => 'Intelligence compounds.',         'body' => 'Every week the system gets sharper. Every decision gets faster. The operators who build on solid foundations outlast every cycle of new tools.'],
-                        ['index_number' => '03', 'title' => 'Infrastructure beats interface.', 'body' => 'Dashboards are wallpaper. Foundations are leverage. The companies that win this decade will be the ones that built the foundation, not the ones that licensed the dashboard.'],
+                        ['index_number' => '03', 'title' => 'Infrastructure beats interface.', 'body' => 'Dashboards are wallpaper. Foundations are leverage. The companies that win this decade will be the ones that built the foundation, not the ones that licensed the dashboard, a workflow, or an automation.'],
                     ],
                     'scenarios' => [],
-                ],
-
-                // TeamDeep (Company.js, index="03" label="The team")
-                [
-                    'acf_fc_layout' => 'section_team',
-                    'settings' => [
-                        'section_index' => '03',
-                        'section_label' => 'The team',
-                        'theme_variant' => 'light',
-                    ],
-                    'headline'      => 'The only team in the category with this combination.',
-                    'headline_lead' => 'The only team in the category',
-                    'headline_gap'  => 'with this combination.',
-                    'avatar_style'  => 'square',
-                    'members' => [
-                        [
-                            'name'  => 'Scott Rayden',
-                            'role'  => 'Founder & CEO',
-                            'bio'   => 'Built and exited an electrical / HVAC company. Ran the largest independent customer acquisition agency in the U.S. — 350 employees, $2B/yr managed media. Six M&A transactions, $150M+ in exit value. Has lived the operator side of the problem and the marketing side of the system gap.',
-                            'photo' => false,
-                        ],
-                        [
-                            'name'  => 'Ryan Sciandri',
-                            'role'  => 'CTO',
-                            'bio'   => 'Former Executive Architect at ServiceTitan. Led API development across every department of the platform. Knows home services data at the schema level better than almost anyone in the industry — and knows where the seams are.',
-                            'photo' => false,
-                        ],
-                        // FIDELITY EXCEPTION (2026-04-29): Darren Merritt
-                        // removed from the public team grid at customer
-                        // request. Original entry preserved here; uncomment
-                        // to restore.
-                        /*
-                        [
-                            'name'  => 'Darren Merritt',
-                            'role'  => 'VP of Engineering',
-                            'bio'   => 'Former VP of Engineering at ServiceTitan. Most recently CPO at PipeDreams, a PE-backed home services roll-up. Brings the operator perspective on what breaks at scale and how to engineer for it.',
-                            'photo' => false,
-                        ],
-                        */
-                        [
-                            'name'  => 'Josh Scott',
-                            'role'  => 'Go To Market',
-                            'bio'   => 'Leads the deployment motion that turns a signed contract into a live, producing intelligence engine in days, not months. Owns the customer experience from kickoff through compounding production use.',
-                            'photo' => false,
-                        ],
-                        [
-                            'name'  => 'Matt Lawler',
-                            'role'  => 'Marketing',
-                            'bio'   => 'Shapes the product surface that operators actually live in — the Armory dashboards, the agent workflows, the ontology authoring tools. Translates how operators run their business into an interface that runs on top of the framework.',
-                            'photo' => false,
-                        ],
-                    ],
                 ],
 
                 // ContactSection (Company.js — same copy as ArchCTA)
