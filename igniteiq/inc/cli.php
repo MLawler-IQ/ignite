@@ -873,8 +873,12 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'photo_slug' => 'ryan',
                         ],
                         [
+                            // FIDELITY EXCEPTION (2026-06-04): export lists role
+                            // as "VP of Engineering"; Matt corrected current
+                            // title to "Head of Engineering". Credential keeps
+                            // his prior ServiceTitan VP title (accurate).
                             'name'       => 'Darren Merritt',
-                            'role'       => 'VP of Engineering',
+                            'role'       => 'Head of Engineering',
                             'credential' => 'Former VP of Engineering at ServiceTitan.',
                             'bio'        => 'Built and scaled the engineering behind the billion-dollar platform, then served as CPO at PipeDreams, a PE-backed home services roll-up. Brings the hard-won perspective on what breaks at scale and how to engineer past it.',
                             'photo'      => false,
