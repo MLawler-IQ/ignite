@@ -719,7 +719,8 @@ if (function_exists('acf_add_local_field_group')) {
                             ['key' => 'field_iiq_tm_headline_lead', 'label' => 'Headline lead', 'name' => 'headline_lead', 'type' => 'text', 'instructions' => 'Stacked headline lines (HTML <br> allowed). E.g. "Operators.<br>Innovators."'],
                             ['key' => 'field_iiq_tm_headline_gap',  'label' => 'Headline gap',  'name' => 'headline_gap',  'type' => 'text', 'instructions' => 'Final headline line, rendered in tertiary/muted colour. E.g. "Architects."'],
                             ['key' => 'field_iiq_tm_lede',          'label' => 'Lede',          'name' => 'lede',          'type' => 'textarea', 'rows' => 4, 'instructions' => 'Optional intro paragraph. When set, the header renders as a two-column layout (headline left, lede right).'],
-                            ['key' => 'field_iiq_tm_featured',      'label' => 'Featured count','name' => 'featured_count', 'type' => 'number', 'default_value' => 0, 'instructions' => 'How many members render in the top row (3-up, large). Remaining members render in a centered 2-up row. 0 = single uniform 3-col grid.'],
+                            ['key' => 'field_iiq_tm_featured',      'label' => 'Featured count','name' => 'featured_count', 'type' => 'number', 'default_value' => 0, 'instructions' => 'How many members render in the top row (3-up, large). Remaining members render in a centered 2-up row. 0 = single uniform grid (see Grid columns).'],
+                            ['key' => 'field_iiq_tm_grid_cols',     'label' => 'Grid columns',  'name' => 'grid_columns', 'type' => 'number', 'default_value' => 0, 'instructions' => 'Only used when Featured count = 0. Number of cards per row in the single-row layout (e.g. 5 = all members across one row). 0 = legacy 3-up.'],
                             [
                                 'key' => 'field_iiq_tm_avatar_style',
                                 'label' => 'Avatar style',

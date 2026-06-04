@@ -26,6 +26,7 @@ $headline_gap  = get_sub_field('headline_gap') ?: '';
 $lede          = get_sub_field('lede') ?: '';
 $featured      = (int) (get_sub_field('featured_count') ?: 0);
 $members       = get_sub_field('members') ?: [];
+$grid_columns  = (int) (get_sub_field('grid_columns') ?: 0);
 $variant       = iiq_section_variant();
 
 if (!function_exists('iiq_team_initials')) {
@@ -137,8 +138,15 @@ $row2 = ($featured > 0) ? array_slice($members, $featured) : [];
             </h2>
         <?php endif; ?>
 
+        <?php
+        // Single-row mode: featured_count = 0 and an explicit grid_columns
+        // renders every member in one row of N (e.g. all 5 across). Falls
+        // back to the 3-up founder row otherwise.
+        $single_cols = ($featured <= 0 && $grid_columns > 0) ? $grid_columns : 3;
+        $row1_class  = ($featured <= 0 && $grid_columns > 0) ? 'iiq-team-single' : 'iiq-team-row1 iiq-grid-3';
+        ?>
         <?php if (!empty($row1) && is_array($row1)): ?>
-            <div class="iiq-team-row1 iiq-grid-3" style="margin-top:80px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+            <div class="<?= esc_attr($row1_class) ?>" style="margin-top:80px;display:grid;grid-template-columns:repeat(<?= (int) $single_cols ?>,1fr);gap:20px;">
                 <?php foreach ($row1 as $m) echo iiq_team_card($m); ?>
             </div>
         <?php endif; ?>

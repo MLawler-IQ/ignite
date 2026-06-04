@@ -613,3 +613,16 @@ img[width], svg[width] { height: auto; }
   /* Kitchen-TV dashboard KPI row 4-up → 2-up */
   .iiq-mk-kpis { grid-template-columns: 1fr 1fr !important; }
 }
+
+/* ── Team single-row layout (Company) ────────────────────────────────
+   featured_count=0 + grid_columns=5 → one row of 5 cards on desktop.
+   Step down gracefully so cards never get unreadably narrow. */
+@media (max-width: 1100px) {
+  .iiq-team-single { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 760px) {
+  .iiq-team-single { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .iiq-team-single { grid-template-columns: 1fr !important; }
+}
