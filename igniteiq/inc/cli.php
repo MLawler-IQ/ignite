@@ -858,6 +858,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'credential' => 'Multi-exit entrepreneur and home services owner.',
                             'bio'        => 'Built and exited an electrical / HVAC company, ran the largest independent customer-acquisition agency in the U.S. 350 people, $2B/yr in managed media, six M&A transactions, $150M+ in exit value. He has lived the operator side of the problem and is obsessed with bringing innovation and intelligence to the trades.',
                             'photo'      => false,
+                            'photo_slug' => 'scott',
                         ],
                         [
                             'name'       => 'Ryan Sciandri',
@@ -865,6 +866,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'credential' => 'Former Chief Data Architect at ServiceTitan.',
                             'bio'        => 'Led data architecture across every department of the platform that digitized the industry. Knows home services data at the schema level better than almost anyone alive — and knows exactly where the seams are.',
                             'photo'      => false,
+                            'photo_slug' => 'ryan',
                         ],
                         // Darren Merritt restored to the public team grid per
                         // Matt's 2026-06-04 decision (supersedes the
@@ -876,6 +878,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'credential' => 'Former VP of Engineering at ServiceTitan.',
                             'bio'        => 'Built and scaled the engineering behind the billion-dollar platform, then served as CPO at PipeDreams, a PE-backed home services roll-up. Brings the hard-won perspective on what breaks at scale and how to engineer past it.',
                             'photo'      => false,
+                            'photo_slug' => 'darren',
                         ],
                         [
                             'name'       => 'Josh Scott',
@@ -883,6 +886,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'credential' => 'Turns a signed contract into a live intelligence engine in days.',
                             'bio'        => 'Owns the deployment motion and the customer experience from kickoff through compounding production use. The reason go-live is measured in days, not months.',
                             'photo'      => false,
+                            'photo_slug' => 'josh',
                         ],
                         [
                             'name'       => 'Matt Lawler',
@@ -890,6 +894,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                             'credential' => 'Builds the product surface operators actually live in.',
                             'bio'        => 'Shapes the Armory dashboards, the agent workflows, and the ontology authoring tools — translating how operators run their business into an interface that runs on top of the framework.',
                             'photo'      => false,
+                            'photo_slug' => 'matt',
                         ],
                     ],
                 ],

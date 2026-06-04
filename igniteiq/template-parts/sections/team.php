@@ -55,6 +55,17 @@ if (!function_exists('iiq_team_card')) {
         $bio        = isset($m['bio']) ? $m['bio'] : '';
         $photo      = isset($m['photo']) ? $m['photo'] : null;
         $has_photo  = is_array($photo) && !empty($photo['ID']);
+
+        // Bundled theme headshot fallback: assets/img/team/<slug>.jpg.
+        // Survives `wp igniteiq seed --force` (versioned in the theme) and
+        // deploys to every environment via rsync — no media-library upload.
+        $slug      = isset($m['photo_slug']) ? sanitize_file_name($m['photo_slug']) : '';
+        $theme_src = '';
+        if (!$has_photo && $slug && defined('IIQ_DIR') && defined('IIQ_URI')) {
+            if (file_exists(IIQ_DIR . '/assets/img/team/' . $slug . '.jpg')) {
+                $theme_src = IIQ_URI . '/assets/img/team/' . $slug . '.jpg';
+            }
+        }
         ob_start(); ?>
         <article style="border:1px solid var(--border-default,#C9C5BD);background:var(--bg-canvas,#fff);display:flex;flex-direction:column;height:100%;">
             <div style="padding:16px 16px 0;">
@@ -66,6 +77,10 @@ if (!function_exists('iiq_team_card')) {
                             false,
                             ['style' => 'width:100%;height:100%;object-fit:cover;display:block;', 'alt' => esc_attr($name)]
                         ) ?>
+                    </div>
+                <?php elseif ($theme_src): ?>
+                    <div style="width:100%;aspect-ratio:4 / 5;overflow:hidden;background:var(--bg-sunken,#F4EFE4);display:block;">
+                        <img src="<?= esc_url($theme_src) ?>" alt="<?= esc_attr($name) ?>" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
                     </div>
                 <?php else: ?>
                     <div aria-hidden="true" style="width:100%;aspect-ratio:4 / 5;background:var(--bg-sunken,#F4EFE4);display:flex;align-items:center;justify-content:center;">
