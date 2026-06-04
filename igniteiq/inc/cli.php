@@ -849,11 +849,7 @@ if (!class_exists('IgniteIQ_CLI')) {
                     'headline_lead'  => 'Operators.<br>Innovators.',
                     'headline_gap'   => 'Architects.',
                     'lede'           => 'The team behind IgniteIQ is back at it to revolutionize home services in the AI economy. Owners, operators, and the architects who built the billion-dollar platform the industry runs on today, are building for a new future that will change the home services landscape forever.',
-                    // Single row of 5 (Matt's 2026-06-04 request): smaller
-                    // cards, all members across one row. Also shrinks each
-                    // photo's display size, easing the low-res Darren source.
-                    'featured_count' => 0,
-                    'grid_columns'   => 5,
+                    'featured_count' => 3,
                     'avatar_style'   => 'square',
                     // Card order per Matt's 2026-06-04 request:
                     // Darren, Ryan, Scott (founder row), then Josh, Matt.
