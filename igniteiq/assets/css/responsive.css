@@ -613,3 +613,15 @@ img[width], svg[width] { height: auto; }
   /* Kitchen-TV dashboard KPI row 4-up → 2-up */
   .iiq-mk-kpis { grid-template-columns: 1fr 1fr !important; }
 }
+
+/* ── WP admin bar offset ─────────────────────────────────────────────
+   Logged-in users get the 32px (46px mobile) WP admin bar overlaying
+   the fixed nav. Drop the nav below it — admin-bar-only, zero effect
+   on public visitors, preserves export fidelity (nav stays top:0 for
+   everyone else). WP exposes the height as a CSS custom property. */
+body.admin-bar nav[data-iiq-nav] {
+  top: var(--wp-admin--admin-bar--height, 32px) !important;
+}
+body.admin-bar .iiq-nav-drawer {
+  top: var(--wp-admin--admin-bar--height, 32px) !important;
+}
