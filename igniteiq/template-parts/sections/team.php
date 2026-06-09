@@ -62,8 +62,12 @@ if (!function_exists('iiq_team_card')) {
         $slug      = isset($m['photo_slug']) ? sanitize_file_name($m['photo_slug']) : '';
         $theme_src = '';
         if (!$has_photo && $slug && defined('IIQ_DIR') && defined('IIQ_URI')) {
-            if (file_exists(IIQ_DIR . '/assets/img/team/' . $slug . '.jpg')) {
-                $theme_src = IIQ_URI . '/assets/img/team/' . $slug . '.jpg';
+            $theme_path = IIQ_DIR . '/assets/img/team/' . $slug . '.jpg';
+            if (file_exists($theme_path)) {
+                // ?v=<mtime> busts WP Engine's CDN asset cache whenever the
+                // bundled headshot changes (same path would otherwise serve
+                // a stale cached copy).
+                $theme_src = IIQ_URI . '/assets/img/team/' . $slug . '.jpg?v=' . filemtime($theme_path);
             }
         }
         ob_start(); ?>
