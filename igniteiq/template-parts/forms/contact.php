@@ -29,34 +29,10 @@ $nonce = wp_create_nonce('iiq_contact');
   <div style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:0.9fr 1.4fr;gap:96px;align-items:flex-start;" class="iiq-grid-split">
 
     <aside>
-      <div style="padding-bottom:24px;border-bottom:1px solid var(--border-default);font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-tertiary);">Offices</div>
-
-      <div style="padding:28px 0;border-bottom:1px solid var(--border-subtle);">
-        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
-          <h3 style="font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:-0.025em;margin:0;color:var(--fg-primary);">San Diego</h3>
-          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ignite-500);padding:3px 8px;border:1px solid var(--ignite-500);border-radius:3px;">HQ</span>
-        </div>
-        <div style="margin-top:10px;font-size:15px;line-height:1.6;color:var(--fg-secondary);">
-          <div>1234 Kettner Blvd, Suite 500</div>
-          <div>San Diego, CA 92101</div>
-        </div>
-      </div>
-
-      <div style="padding:28px 0;border-bottom:1px solid var(--border-subtle);">
-        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
-          <h3 style="font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:-0.025em;margin:0;color:var(--fg-primary);">San Francisco</h3>
-        </div>
-        <div style="margin-top:10px;font-size:15px;line-height:1.6;color:var(--fg-secondary);">
-          <div>600 Montgomery St, 12th Floor</div>
-          <div>San Francisco, CA 94111</div>
-        </div>
-      </div>
-
-      <div style="margin-top:56px;padding-top:24px;border-top:1px solid var(--border-default);font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg-tertiary);">Direct</div>
-      <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
-        <a href="mailto:hello@igniteiq.com" style="font-family:var(--font-display);font-size:22px;font-weight:500;letter-spacing:-0.02em;color:var(--fg-primary);text-decoration:none;">hello@igniteiq.com</a>
-        <span style="font-size:15px;color:var(--fg-secondary);">+1 (619) 555-0114</span>
-      </div>
+      <?php // FIDELITY EXCEPTION: export's left column had Offices (San Diego HQ + SF) ?>
+      <?php // and a Direct block (hello@igniteiq.com / phone). Replaced per ?>
+      <?php // 2026-06 stakeholder ask: single HQ line, no public direct contact yet. ?>
+      <p style="margin:0;font-family:var(--font-display);font-size:24px;font-weight:500;letter-spacing:-0.02em;line-height:1.4;color:var(--fg-primary);">Headquartered in San Diego, CA.</p>
     </aside>
 
     <div style="padding:40px 44px 44px;border:1px solid var(--border-default);background:var(--bg-base);">

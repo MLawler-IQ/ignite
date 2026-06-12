@@ -12,6 +12,7 @@ $default_columns = [
         'links' => [
             ['label' => 'How it works', 'url' => home_url('/how-it-works/')],
             ['label' => 'Ontology',     'url' => home_url('/ontology/')],
+            ['label' => 'Sign In',      'url' => 'https://studio.igniteiq.com/#/signin', 'target' => '_blank'],
         ],
     ],
     [
@@ -25,9 +26,10 @@ $default_columns = [
     [
         'heading' => 'Resources',
         'links' => [
-            ['label' => 'Security', 'url' => home_url('/how-it-works/#security')],
-            ['label' => 'Privacy',  'url' => '#'],
-            ['label' => 'Terms',    'url' => '#'],
+            ['label' => 'Security',         'url' => home_url('/how-it-works/#security')],
+            ['label' => 'Marketing Portal', 'url' => 'https://portal.igniteiq.com', 'target' => '_blank'],
+            ['label' => 'Privacy',          'url' => '#'],
+            ['label' => 'Terms',            'url' => '#'],
         ],
     ],
 ];
@@ -59,7 +61,8 @@ $copyright = function_exists('iiq_setting')
           <?php foreach ((array) $links as $lnk): ?>
             <?php $label = is_array($lnk) ? ($lnk['label'] ?? '') : ($lnk->label ?? ''); ?>
             <?php $url = is_array($lnk) ? ($lnk['url'] ?? '#') : ($lnk->url ?? '#'); ?>
-            <li><a href="<?= esc_url($url) ?>" style="color:var(--ink-200,#a0a0a0);text-decoration:none;font-size:14px;"><?= esc_html($label) ?></a></li>
+            <?php $target = is_array($lnk) ? ($lnk['target'] ?? '') : ($lnk->target ?? ''); ?>
+            <li><a href="<?= esc_url($url) ?>"<?= $target ? ' target="' . esc_attr($target) . '" rel="noopener"' : '' ?> style="color:var(--ink-200,#a0a0a0);text-decoration:none;font-size:14px;"><?= esc_html($label) ?></a></li>
           <?php endforeach; ?>
         </ul>
       </div>
