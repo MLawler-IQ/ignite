@@ -87,7 +87,10 @@ $iiq_is_signin_for_nav = (function_exists('is_page_template') && is_page_templat
 if ($iiq_is_signin_for_nav) {
     $items = [];
 }
-$signin_url  = home_url('/signin/');
+// FIDELITY EXCEPTION: nav "Sign in" link points to the external Studio app
+// (separate Vue/React product at studio.igniteiq.com) instead of the local
+// /signin/ WP page. The /signin/ page is still reachable by direct URL.
+$signin_url  = 'https://studio.igniteiq.com/#/signin';
 $contact_url = home_url('/contact/');
 ?>
 <nav data-iiq-nav data-inverse="<?= $inverse ? '1' : '0' ?>" style="position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;border-bottom:1px solid transparent;transition:background 240ms var(--ease-standard,ease), border-color 240ms var(--ease-standard,ease);">
@@ -108,7 +111,7 @@ $contact_url = home_url('/contact/');
 
     <?php if (!$iiq_is_signin_for_nav): ?>
     <div class="iiq-nav-desktop" style="margin-left:auto;display:flex;gap:20px;align-items:center;">
-      <a href="<?= esc_url($signin_url) ?>" style="font-weight:500;color:<?= esc_attr($fg_muted) ?>;text-decoration:none;font-size:16px;">Sign in</a>
+      <a href="<?= esc_url($signin_url) ?>" target="_blank" rel="noopener" style="font-weight:500;color:<?= esc_attr($fg_muted) ?>;text-decoration:none;font-size:16px;">Sign in</a>
       <a href="<?= esc_url($contact_url) ?>" style="font-weight:500;color:<?= esc_attr($fg_muted) ?>;text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-size:16px;">Contact <span style="font-size:13px;">→</span></a>
     </div>
     <?php endif; ?>
@@ -143,7 +146,7 @@ $contact_url = home_url('/contact/');
       </li>
     <?php endforeach; ?>
     <li style="border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);">
-      <a href="<?= esc_url($signin_url) ?>" style="display:block;padding:20px 0;font-family:var(--font-display, 'Aeonik', sans-serif);font-size:24px;font-weight:600;letter-spacing:-0.02em;color:var(--fg-primary);text-decoration:none;">Sign in</a>
+      <a href="<?= esc_url($signin_url) ?>" target="_blank" rel="noopener" style="display:block;padding:20px 0;font-family:var(--font-display, 'Aeonik', sans-serif);font-size:24px;font-weight:600;letter-spacing:-0.02em;color:var(--fg-primary);text-decoration:none;">Sign in</a>
     </li>
   </ul>
 
