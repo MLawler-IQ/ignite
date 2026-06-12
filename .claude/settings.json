@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(php -l*)",
+      "Bash(/Users/*/Library/Application Support/Local/lightning-services/php-*/bin/darwin-arm64/bin/php -l*)",
+      "Bash(gh run list*)",
+      "Bash(gh run view*)",
+      "Bash(gh run watch*)",
+      "Bash(gh auth status*)",
+      "Bash(curl -s https://igniteiqstg.wpenginepowered.com/*)",
+      "Bash(curl -s https://igniteiq.com/*)"
+    ]
+  }
+}
