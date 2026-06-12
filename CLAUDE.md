@@ -2,6 +2,9 @@
 
 > Auto-loaded by Claude Code when working in this repo.
 > Read `AGENTS.md` at the same path for deeper detail (this file is the cliff-notes; AGENTS.md is the manual).
+> **Read `OPERATIONS.md` for everything about the LIVE site — deploys, email, DNS, secrets, gotchas. Required reading before any production change.**
+
+@OPERATIONS.md
 
 ## What this repo is
 
