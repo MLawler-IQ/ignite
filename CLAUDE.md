@@ -7,6 +7,8 @@
 
 WordPress theme for **igniteiq.com**, ported from Claude Design HTML/JS/CSS exports. Theme code lives in `igniteiq/`. Repo root holds deploy tooling, runbooks, and the Cowork plugin source.
 
+> **Two repos, don't confuse them.** "The igniteiq website" = the **marketing site** at igniteiq.com = THIS repo (`MLawler-IQ/ignite`, WP theme). The logged-in **SaaS dashboard** is a *different* repo: `igniteIQ-Platform/igniteiq-frontend` (Vite/React/TS SPA). Default "the igniteiq website" to the marketing site.
+
 - **Local visual dev**: `bash deploy.sh` rsyncs `igniteiq/` → `~/Local Sites/igniteiq/...`. Visit `http://igniteiq.local/`.
 - **WP Engine staging**: every push to `main` triggers `.github/workflows/deploy-staging.yml` → rsync to `igniteiqstg.ssh.wpengine.net` → `wp igniteiq seed --force` → `wp page-cache flush` → curl-verify all 6 cornerstone URLs. Live preview at `https://igniteiqstg.wpenginepowered.com/`.
 - **Production** is not automated.
@@ -80,6 +82,7 @@ Used by `/port-iiq-diff` to lint edits before commit. Not needed in Cowork sandb
 - Don't deploy to production from this repo. Staging only.
 - Don't paraphrase export copy. Byte-accurate or `// FIDELITY EXCEPTION`.
 - Don't push if `php -l` fails on any modified file.
+- Don't add a 4th footer column — the grid in `template-parts/footer.php` is hardcoded `repeat(3,1fr)`. Add new links inside an existing column.
 
 ## Cowork plugin
 

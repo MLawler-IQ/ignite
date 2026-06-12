@@ -78,6 +78,7 @@ This is the spine of the site. Internalize it before editing.
 - **Default content** for each page is seeded by `IgniteIQ_CLI::default_pages()` in `igniteiq/inc/cli.php`, keyed by page slug. The class is defined unconditionally so non-CLI callers (e.g. the deprecated admin tool) can read the defaults.
 - To add or change copy on a cornerstone page: edit the renderer (PHP markup) **and** the matching seed row (PHP array in `default_pages()`) in lockstep. Markup-only changes leave the DB stale; seed-only changes have no place to render.
 - Site-wide content (footer columns, contact email, social links) lives in the ACF options page registered by `inc/acf-options-page.php` ("Site Settings" in the admin sidebar), not in `page_sections`.
+- **Footer specifics:** `template-parts/footer.php` renders `iiq_setting('footer_columns', $default_columns)`. The ACF field `footer_columns` is **unseeded** today, so the `$default_columns` array hardcoded in `footer.php` is what actually renders — edit defaults there. If Site Settings ever populates `footer_columns`, that override silently replaces the defaults, so the link would need adding there too. The footer grid is hardcoded `grid-template-columns:1.2fr repeat(3,1fr)` — exactly 3 link columns; add new links inside an existing column, never a 4th.
 
 ## 4. Two deploy paths
 
