@@ -1,0 +1,95 @@
+# Configure contact-form email on WP Engine staging.
+#
+# Manually triggered (workflow_dispatch). Writes the SMTP credentials as a
+# must-use plugin onto staging FROM REPO SECRETS — nothing sensitive is ever
+# committed — so the theme's inc/mail.php routes wp_mail() through Google
+# Workspace SMTP. Optionally fires a test send. mu-plugins live OUTSIDE the
+# theme rsync target, so the regular deploy never clobbers this file.
+#
+# Required repo secrets (Settings > Secrets and variables > Actions):
+#   WPE_SSH_KEY      (already set, used by deploy-staging.yml)
+#   IIQ_SMTP_HOST    e.g. smtp.gmail.com  (or smtp-relay.gmail.com)
+#   IIQ_SMTP_USER    the account you AUTHENTICATE as (must own the From alias)
+#   IIQ_SMTP_PASS    app password / relay credential (no spaces)
+#   IIQ_MAIL_FROM    visible sender, e.g. notifications@igniteiq.com
+# Optional (sensible defaults if unset):
+#   IIQ_SMTP_PORT    (default 587)
+#   IIQ_SMTP_SECURE  (default tls)
+#   IIQ_MAIL_FROM_NAME (default "IgniteIQ Website")
+
+name: Configure contact-form mail (staging)
+
+on:
+  workflow_dispatch:
+    inputs:
+      send_test:
+        description: Fire a test email after writing config
+        type: boolean
+        default: true
+      test_to:
+        description: Test recipient address
+        default: matt@igniteiq.com
+
+concurrency:
+  group: configure-mail-staging
+  cancel-in-progress: false
+
+jobs:
+  configure:
+    name: Write SMTP mu-plugin + test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.WPE_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Write SMTP mu-plugin to staging
+        env:
+          SMTP_HOST: ${{ secrets.IIQ_SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.IIQ_SMTP_PORT }}
+          SMTP_USER: ${{ secrets.IIQ_SMTP_USER }}
+          SMTP_PASS: ${{ secrets.IIQ_SMTP_PASS }}
+          SMTP_SECURE: ${{ secrets.IIQ_SMTP_SECURE }}
+          MAIL_FROM: ${{ secrets.IIQ_MAIL_FROM }}
+          MAIL_FROM_NAME: ${{ secrets.IIQ_MAIL_FROM_NAME }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SMTP_HOST}" ] || [ -z "${SMTP_USER}" ] || [ -z "${SMTP_PASS}" ] || [ -z "${MAIL_FROM}" ]; then
+            echo "::error::Missing required secret(s): IIQ_SMTP_HOST / IIQ_SMTP_USER / IIQ_SMTP_PASS / IIQ_MAIL_FROM"
+            exit 1
+          fi
+          cat > /tmp/iiq-smtp.php <<PHP
+          <?php
+          /* Plugin Name: IgniteIQ SMTP credentials (managed by CI - do not edit) */
+          if (!defined('ABSPATH')) exit;
+          define('IIQ_SMTP_HOST', '${SMTP_HOST}');
+          define('IIQ_SMTP_PORT', ${SMTP_PORT:-587});
+          define('IIQ_SMTP_USER', '${SMTP_USER}');
+          define('IIQ_SMTP_PASS', '${SMTP_PASS}');
+          define('IIQ_SMTP_SECURE', '${SMTP_SECURE:-tls}');
+          define('IIQ_MAIL_FROM', '${MAIL_FROM}');
+          define('IIQ_MAIL_FROM_NAME', '${MAIL_FROM_NAME:-IgniteIQ Website}');
+          PHP
+          REMOTE=igniteiqstg@igniteiqstg.ssh.wpengine.net
+          ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 "$REMOTE" 'mkdir -p sites/igniteiqstg/wp-content/mu-plugins'
+          scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 /tmp/iiq-smtp.php "$REMOTE":sites/igniteiqstg/wp-content/mu-plugins/iiq-smtp.php
+          rm -f /tmp/iiq-smtp.php
+          echo "Wrote mu-plugins/iiq-smtp.php to staging (credentials not logged)."
+
+      - name: Send test email
+        if: ${{ inputs.send_test }}
+        env:
+          TEST_TO: ${{ inputs.test_to }}
+        run: |
+          set -euo pipefail
+          cat > /tmp/iiq-mailtest.php <<PHP
+          <?php
+          \$ok = wp_mail('${TEST_TO}', 'IgniteIQ SMTP test', 'Workspace SMTP wired OK at ' . date('c'));
+          WP_CLI::log('wp_mail() returned: ' . var_export(\$ok, true));
+          PHP
+          REMOTE=igniteiqstg@igniteiqstg.ssh.wpengine.net
+          scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 /tmp/iiq-mailtest.php "$REMOTE":sites/igniteiqstg/iiq-mailtest.php
+          ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 "$REMOTE" 'cd sites/igniteiqstg && wp eval-file iiq-mailtest.php; rm -f iiq-mailtest.php'
+          rm -f /tmp/iiq-mailtest.php
