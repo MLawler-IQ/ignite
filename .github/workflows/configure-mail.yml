@@ -73,8 +73,12 @@ jobs:
           define('IIQ_MAIL_FROM_NAME', '${MAIL_FROM_NAME:-IgniteIQ Website}');
           PHP
           REMOTE=igniteiqstg@igniteiqstg.ssh.wpengine.net
-          ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 "$REMOTE" 'mkdir -p sites/igniteiqstg/wp-content/mu-plugins'
-          scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 /tmp/iiq-smtp.php "$REMOTE":sites/igniteiqstg/wp-content/mu-plugins/iiq-smtp.php
+          SSH="ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519"
+          # WPE's SSH gateway has no SFTP subsystem, so scp fails ("subsystem
+          # request failed"). Write via an ssh-exec'd cat instead — the same
+          # exec channel the deploy uses for wp-cli.
+          $SSH "$REMOTE" 'mkdir -p sites/igniteiqstg/wp-content/mu-plugins'
+          $SSH "$REMOTE" 'cat > sites/igniteiqstg/wp-content/mu-plugins/iiq-smtp.php' < /tmp/iiq-smtp.php
           rm -f /tmp/iiq-smtp.php
           echo "Wrote mu-plugins/iiq-smtp.php to staging (credentials not logged)."
 
@@ -90,6 +94,7 @@ jobs:
           WP_CLI::log('wp_mail() returned: ' . var_export(\$ok, true));
           PHP
           REMOTE=igniteiqstg@igniteiqstg.ssh.wpengine.net
-          scp -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 /tmp/iiq-mailtest.php "$REMOTE":sites/igniteiqstg/iiq-mailtest.php
-          ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519 "$REMOTE" 'cd sites/igniteiqstg && wp eval-file iiq-mailtest.php; rm -f iiq-mailtest.php'
+          SSH="ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519"
+          $SSH "$REMOTE" 'cat > sites/igniteiqstg/iiq-mailtest.php' < /tmp/iiq-mailtest.php
+          $SSH "$REMOTE" 'cd sites/igniteiqstg && wp eval-file iiq-mailtest.php; rm -f iiq-mailtest.php'
           rm -f /tmp/iiq-mailtest.php
