@@ -23,3 +23,6 @@ exports/*
 
 # Cowork plugin: source tracked, built artifact ignored
 cowork-plugin/*.plugin
+
+# Per-operator Claude Code permissions — never committed (see .planning/parity-plan.md §11)
+.claude/settings.local.json

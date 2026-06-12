@@ -1,0 +1,18 @@
+{
+  "name": "ignite",
+  "owner": { "name": "IgniteIQ" },
+  "plugins": [
+    {
+      "name": "iiq-team",
+      "source": "./iiq-team-plugin",
+      "description": "Team-parity toolkit: editor agent + ops ritual skills + bootstrap",
+      "category": "productivity"
+    },
+    {
+      "name": "igniteiq-port",
+      "source": "./cowork-plugin/igniteiq-port",
+      "description": "Design-export port loop (also distributed as a Cowork .plugin zip)",
+      "category": "productivity"
+    }
+  ]
+}

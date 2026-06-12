@@ -1,0 +1,7 @@
+# Sensitive paths — require Matt's review when changed via PR
+/.github/workflows/             @MLawler-IQ
+/igniteiq/inc/mail.php          @MLawler-IQ
+/igniteiq/inc/contact-form.php  @MLawler-IQ
+/igniteiq/inc/cli.php           @MLawler-IQ
+/igniteiq/page-signin.php       @MLawler-IQ
+/OPERATIONS.md                  @MLawler-IQ

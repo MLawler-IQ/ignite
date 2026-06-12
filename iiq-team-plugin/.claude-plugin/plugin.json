@@ -1,0 +1,6 @@
+{
+  "name": "iiq-team",
+  "version": "0.1.0",
+  "description": "Team-parity toolkit for operating igniteiq.com via Claude Code: the iiq-web-editor agent (voice + fidelity + deploy discipline), one-time /iiq-setup bootstrap, and ritual skills for deploys, verification, mail, DNS, and drift detection. Bundles the 5 design-export port-loop skills.",
+  "author": { "name": "IgniteIQ" }
+}
