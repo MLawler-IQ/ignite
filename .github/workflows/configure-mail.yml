@@ -1,10 +1,10 @@
-# Configure contact-form email on WP Engine staging.
+# Configure contact-form email on WP Engine (staging OR production).
 #
 # Manually triggered (workflow_dispatch). Writes the SMTP credentials as a
-# must-use plugin onto staging FROM REPO SECRETS — nothing sensitive is ever
-# committed — so the theme's inc/mail.php routes wp_mail() through Google
-# Workspace SMTP. Optionally fires a test send. mu-plugins live OUTSIDE the
-# theme rsync target, so the regular deploy never clobbers this file.
+# must-use plugin onto the chosen environment FROM REPO SECRETS — nothing
+# sensitive is ever committed — so the theme's inc/mail.php routes wp_mail()
+# through Google Workspace SMTP. Optionally fires a test send. mu-plugins live
+# OUTSIDE the theme rsync target, so the regular deploy never clobbers them.
 #
 # Required repo secrets (Settings > Secrets and variables > Actions):
 #   WPE_SSH_KEY      (already set, used by deploy-staging.yml)
@@ -17,11 +17,18 @@
 #   IIQ_SMTP_SECURE  (default tls)
 #   IIQ_MAIL_FROM_NAME (default "IgniteIQ Website")
 
-name: Configure contact-form mail (staging)
+name: Configure contact-form mail
 
 on:
   workflow_dispatch:
     inputs:
+      environment:
+        description: Which WP Engine environment to configure
+        type: choice
+        options:
+          - staging
+          - production
+        default: staging
       send_test:
         description: Fire a test email after writing config
         type: boolean
@@ -31,21 +38,42 @@ on:
         default: matt@igniteiq.com
 
 concurrency:
-  group: configure-mail-staging
+  group: configure-mail-${{ inputs.environment }}
   cancel-in-progress: false
 
 jobs:
   configure:
-    name: Write SMTP mu-plugin + test
+    name: Write SMTP mu-plugin + test (${{ inputs.environment }})
     runs-on: ubuntu-latest
     steps:
+      - name: Resolve environment
+        id: env
+        run: |
+          set -euo pipefail
+          case "${{ inputs.environment }}" in
+            staging)
+              echo "site_user=igniteiqstg" >> "$GITHUB_OUTPUT"
+              echo "site_host=igniteiqstg.ssh.wpengine.net" >> "$GITHUB_OUTPUT"
+              echo "site_path=sites/igniteiqstg" >> "$GITHUB_OUTPUT"
+              ;;
+            production)
+              echo "site_user=igniteiq" >> "$GITHUB_OUTPUT"
+              echo "site_host=igniteiq.ssh.wpengine.net" >> "$GITHUB_OUTPUT"
+              echo "site_path=sites/igniteiq" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "::error::Unknown environment '${{ inputs.environment }}'"
+              exit 1
+              ;;
+          esac
+
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.WPE_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-      - name: Write SMTP mu-plugin to staging
+      - name: Write SMTP mu-plugin
         env:
           SMTP_HOST: ${{ secrets.IIQ_SMTP_HOST }}
           SMTP_PORT: ${{ secrets.IIQ_SMTP_PORT }}
@@ -54,6 +82,10 @@ jobs:
           SMTP_SECURE: ${{ secrets.IIQ_SMTP_SECURE }}
           MAIL_FROM: ${{ secrets.IIQ_MAIL_FROM }}
           MAIL_FROM_NAME: ${{ secrets.IIQ_MAIL_FROM_NAME }}
+          SITE_USER: ${{ steps.env.outputs.site_user }}
+          SITE_HOST: ${{ steps.env.outputs.site_host }}
+          SITE_PATH: ${{ steps.env.outputs.site_path }}
+          ENV_NAME: ${{ inputs.environment }}
         run: |
           set -euo pipefail
           if [ -z "${SMTP_HOST}" ] || [ -z "${SMTP_USER}" ] || [ -z "${SMTP_PASS}" ] || [ -z "${MAIL_FROM}" ]; then
@@ -72,29 +104,33 @@ jobs:
           define('IIQ_MAIL_FROM', '${MAIL_FROM}');
           define('IIQ_MAIL_FROM_NAME', '${MAIL_FROM_NAME:-IgniteIQ Website}');
           PHP
-          REMOTE=igniteiqstg@igniteiqstg.ssh.wpengine.net
+          REMOTE="${SITE_USER}@${SITE_HOST}"
           SSH="ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519"
           # WPE's SSH gateway has no SFTP subsystem, so scp fails ("subsystem
           # request failed"). Write via an ssh-exec'd cat instead — the same
           # exec channel the deploy uses for wp-cli.
-          $SSH "$REMOTE" 'mkdir -p sites/igniteiqstg/wp-content/mu-plugins'
-          $SSH "$REMOTE" 'cat > sites/igniteiqstg/wp-content/mu-plugins/iiq-smtp.php' < /tmp/iiq-smtp.php
+          $SSH "$REMOTE" "mkdir -p ${SITE_PATH}/wp-content/mu-plugins"
+          $SSH "$REMOTE" "cat > ${SITE_PATH}/wp-content/mu-plugins/iiq-smtp.php" < /tmp/iiq-smtp.php
           rm -f /tmp/iiq-smtp.php
-          echo "Wrote mu-plugins/iiq-smtp.php to staging (credentials not logged)."
+          echo "Wrote mu-plugins/iiq-smtp.php to ${ENV_NAME} (credentials not logged)."
 
       - name: Send test email
         if: ${{ inputs.send_test }}
         env:
           TEST_TO: ${{ inputs.test_to }}
+          SITE_USER: ${{ steps.env.outputs.site_user }}
+          SITE_HOST: ${{ steps.env.outputs.site_host }}
+          SITE_PATH: ${{ steps.env.outputs.site_path }}
+          ENV_NAME: ${{ inputs.environment }}
         run: |
           set -euo pipefail
           cat > /tmp/iiq-mailtest.php <<PHP
           <?php
-          \$ok = wp_mail('${TEST_TO}', 'IgniteIQ SMTP test', 'Workspace SMTP wired OK at ' . date('c'));
+          \$ok = wp_mail('${TEST_TO}', 'IgniteIQ SMTP test (${ENV_NAME})', 'Workspace SMTP wired OK on ${ENV_NAME} at ' . date('c'));
           WP_CLI::log('wp_mail() returned: ' . var_export(\$ok, true));
           PHP
-          REMOTE=igniteiqstg@igniteiqstg.ssh.wpengine.net
+          REMOTE="${SITE_USER}@${SITE_HOST}"
           SSH="ssh -o StrictHostKeyChecking=accept-new -i ~/.ssh/id_ed25519"
-          $SSH "$REMOTE" 'cat > sites/igniteiqstg/iiq-mailtest.php' < /tmp/iiq-mailtest.php
-          $SSH "$REMOTE" 'cd sites/igniteiqstg && wp eval-file iiq-mailtest.php; rm -f iiq-mailtest.php'
+          $SSH "$REMOTE" "cat > ${SITE_PATH}/iiq-mailtest.php" < /tmp/iiq-mailtest.php
+          $SSH "$REMOTE" "cd ${SITE_PATH} && wp eval-file iiq-mailtest.php; rm -f iiq-mailtest.php"
           rm -f /tmp/iiq-mailtest.php
