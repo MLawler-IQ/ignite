@@ -16,6 +16,7 @@ require_once IIQ_DIR . '/inc/acf-field-groups.php';
 require_once IIQ_DIR . '/inc/acf-options-page.php';
 require_once IIQ_DIR . '/inc/acf-render-flexible.php';
 require_once IIQ_DIR . '/inc/contact-form.php';
+require_once IIQ_DIR . '/inc/mail.php';
 
 if (defined('WP_CLI') && WP_CLI) {
     require_once IIQ_DIR . '/inc/cli.php';

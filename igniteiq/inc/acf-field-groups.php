@@ -1024,7 +1024,14 @@ if (function_exists('acf_add_local_field_group')) {
             ],
 
             ['key' => 'field_iiq_settings_footer_copyright', 'label' => 'Footer copyright note', 'name' => 'footer_copyright_note', 'type' => 'text'],
-            ['key' => 'field_iiq_settings_contact_email', 'label' => 'Contact email', 'name' => 'contact_email', 'type' => 'text'],
+            [
+                'key'           => 'field_iiq_settings_contact_email',
+                'label'         => 'Contact form recipients',
+                'name'          => 'contact_email',
+                'type'          => 'text',
+                'instructions'  => 'Email address(es) that receive contact-form submissions. Separate multiple addresses with commas. Leave blank to fall back to the built-in default list.',
+                'default_value' => 'scott@igniteiq.com, matt@igniteiq.com, joshscott@igniteiq.com',
+            ],
             ['key' => 'field_iiq_settings_contact_phone', 'label' => 'Contact phone', 'name' => 'contact_phone', 'type' => 'text'],
 
             // Social links

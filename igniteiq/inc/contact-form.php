@@ -59,7 +59,7 @@ function iiq_contact_handle() {
         wp_send_json_error(['message' => implode(' ', $errors)], 422);
     }
 
-    $to = function_exists('iiq_setting') ? iiq_setting('contact_email', get_option('admin_email')) : get_option('admin_email');
+    $to = iiq_contact_recipients();
     $subject = sprintf('[IgniteIQ] New contact: %s %s — %s', $first, $last, $company);
     $body  = "Name: {$first} {$last}\n";
     $body .= "Email: {$email}\n";
@@ -80,4 +80,28 @@ function iiq_contact_handle() {
     }
 
     wp_send_json_success(['message' => 'Thanks — we got your note and will be in touch shortly.']);
+}
+
+/**
+ * Resolve the contact-form notification recipients.
+ *
+ * Reads the editable "Contact form recipients" Site Setting (contact_email),
+ * which may hold one or more addresses separated by commas, semicolons, or
+ * whitespace. Each candidate is sanitized and validated. Falls back to the
+ * built-in IgniteIQ distribution list when the setting is empty or holds no
+ * valid address, so the form is never silently left without a destination.
+ *
+ * @return string[] List of valid recipient email addresses.
+ */
+function iiq_contact_recipients() {
+    $default = ['scott@igniteiq.com', 'matt@igniteiq.com', 'joshscott@igniteiq.com'];
+
+    $raw        = function_exists('iiq_setting') ? (string) iiq_setting('contact_email', '') : '';
+    $candidates = preg_split('/[\s,;]+/', $raw, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $valid      = array_values(array_filter(array_map('sanitize_email', $candidates), 'is_email'));
+
+    $recipients = $valid ?: $default;
+
+    /** Final recipient list, post-validation and pre-send. */
+    return apply_filters('iiq_contact_recipients', $recipients);
 }
