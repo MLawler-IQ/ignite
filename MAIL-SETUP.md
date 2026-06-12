@@ -26,11 +26,22 @@ ops steps required to make delivery reliable.
 
 ## One-time ops steps (do on BOTH staging and production)
 
-### 1. Create a dedicated sender (do not use a person's mailbox)
+### 1. Pick a sender identity (no new paid seat required)
 
-In Google Workspace Admin, create `notifications@igniteiq.com` (a normal user
-seat, or a relay-authorized account). Using a dedicated account keeps website
-mail isolated from anyone's inbox and avoids tripping personal-account limits.
+You do **not** need a new Workspace seat. Best no-cost option: add
+`notifications@igniteiq.com` as an **alias** on an existing user (Admin →
+Users → the user → *Add alternate emails* — free). Authenticate SMTP (step 2)
+as that existing user; set the visible `From` to the alias. DKIM signs for the
+domain either way.
+
+Alternatives: a dedicated user seat (tidiest, paid) or any existing shared/ops
+account. **Avoid** using a real person's *primary* address as both the auth
+account and the `From` — bounces and replies would land in their inbox, and
+site mail breaks when their password/MFA rotates or they offboard.
+
+Note the distinction used below: `IIQ_SMTP_USER` is the account you
+**authenticate** as; `IIQ_MAIL_FROM` is the **visible sender** (the alias).
+They need not be the same address.
 
 ### 2. Get an SMTP credential
 
@@ -39,7 +50,8 @@ Pick one:
 - **Google Workspace SMTP relay** (`smtp-relay.gmail.com:587`) — Admin console →
   Apps → Google Workspace → Gmail → *Routing* → **SMTP relay service**. Add an
   entry; for WP Engine (no static outbound IP) choose **"Require SMTP
-  Authentication"** and authenticate as `notifications@igniteiq.com`. Limit:
+  Authentication"** and authenticate as the account that owns the alias (or a
+  dedicated account). Limit:
   ~10,000 msgs/day. Preferred.
 - **Gmail SMTP** (`smtp.gmail.com:587`) — enable 2-Step Verification on
   `notifications@igniteiq.com`, then generate an **App Password** and use it as
@@ -52,10 +64,10 @@ On each WP Engine environment (staging + production), add:
 ```php
 define('IIQ_SMTP_HOST',      'smtp-relay.gmail.com'); // or smtp.gmail.com
 define('IIQ_SMTP_PORT',      587);
-define('IIQ_SMTP_USER',      'notifications@igniteiq.com');
+define('IIQ_SMTP_USER',      'realuser@igniteiq.com');  // account you AUTH as
 define('IIQ_SMTP_PASS',      'xxxx-xxxx-xxxx-xxxx');   // app password / relay credential
 define('IIQ_SMTP_SECURE',    'tls');
-define('IIQ_MAIL_FROM',      'notifications@igniteiq.com');
+define('IIQ_MAIL_FROM',      'notifications@igniteiq.com'); // visible sender (alias)
 define('IIQ_MAIL_FROM_NAME', 'IgniteIQ Website');
 ```
 
