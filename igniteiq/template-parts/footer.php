@@ -25,9 +25,10 @@ $default_columns = [
     [
         'heading' => 'Resources',
         'links' => [
-            ['label' => 'Security', 'url' => home_url('/how-it-works/#security')],
-            ['label' => 'Privacy',  'url' => '#'],
-            ['label' => 'Terms',    'url' => '#'],
+            ['label' => 'Marketing Portal', 'url' => 'https://portal.igniteiq.com'],
+            ['label' => 'Security',         'url' => home_url('/how-it-works/#security')],
+            ['label' => 'Privacy',          'url' => '#'],
+            ['label' => 'Terms',            'url' => '#'],
         ],
     ],
 ];
