@@ -274,6 +274,12 @@ curl -s -X POST -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 
 ---
 
+## Audit trail
+
+- **Code:** `git log` / `git blame` — every theme/content change in code is attributed.
+- **WP admin:** **Simple History** plugin (installed + active on both envs, 2026-06-13) logs post/option/plugin/user events with user + timestamp. View: WP admin → dashboard → Simple History. Default 60-day retention.
+- **GitHub branch protection on `main`:** force-pushes and branch deletion blocked (2026-06-13). Direct pushes still allowed — PR review required only for CODEOWNERS paths when PRs are used.
+
 ## Cache layers (gotcha)
 
 | Layer | Cleared by | TTL |
