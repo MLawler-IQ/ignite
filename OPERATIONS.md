@@ -274,6 +274,13 @@ curl -s -X POST -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 
 ---
 
+## WordPress mail + comments policy
+
+- **`admin_email`** = `notifications@igniteiq.com` on both envs (was WP Engine's placeholder `dev-email@wpengine.local`, which doesn't resolve — it caused NXDOMAIN bounces once real SMTP was wired). All WP system mail (core updates, admin notices) now reaches a real inbox.
+- **Comments are OFF site-wide** (this is a marketing/infrastructure site — no blog comments). `default_comment_status=closed`, `default_ping_status=closed`, `comments_notify=0`, `moderation_notify=0`; the default "Hello world!" post (ID 1) has comments closed. Set 2026-06-13 after spam bots on the default post generated bounce emails to `notifications@`.
+- These are `wp_options` values — **not** touched by `wp igniteiq seed --force`, so they persist across deploys.
+- If bounce emails reappear at `notifications@`: check `wp comment list` (spam on any post) and confirm `default_comment_status` is still `closed`.
+
 ## Audit trail
 
 - **Code:** `git log` / `git blame` — every theme/content change in code is attributed.
